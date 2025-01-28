@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // Remplacer les placeholders dans le fichier properties avec les variables Jenkins
                 sh '''
-                sed -i "s|\${API_POLYGON}|$API_POLYGON|g" src.environments.environment.ts
+                sed -i "s|\${API_POLYGON}|$API_POLYGON|g" src/environments/environment.ts
                 '''
             }
         }
