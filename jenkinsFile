@@ -1,4 +1,6 @@
 pipeline {
+    agent any
+    
     environment {
         IMAGE_NAME = 'portfolio-app' // Nom de l'image Docker à construire
         IMAGE_TAG = 'latest'           // Tag de l'image Docker (par exemple, latest)
