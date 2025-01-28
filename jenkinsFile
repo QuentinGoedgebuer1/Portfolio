@@ -1,0 +1,33 @@
+pipeline {
+    environment {
+        IMAGE_NAME = 'portfolio-app' // Nom de l'image Docker à construire
+        IMAGE_TAG = 'latest'           // Tag de l'image Docker (par exemple, latest)
+    }
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Construction de l'image Docker
+                    sh """
+                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                    """
+                }
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Exécution de l'image Docker en tant que conteneur
+                    sh """
+                    docker run -d --name portfolio-app ${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline terminé.'
+        }
+    }
+}
