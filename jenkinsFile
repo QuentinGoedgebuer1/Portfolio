@@ -7,6 +7,16 @@ pipeline {
         PORT = '4200'             // Port de l'application
     }
     stages {
+        stage('Delete Docker container') {
+            steps {
+                script {
+                    // Construction de l'image Docker
+                    sh """
+                    docker rm -f ${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
