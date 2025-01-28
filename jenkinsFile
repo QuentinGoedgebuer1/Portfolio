@@ -1,9 +1,10 @@
 pipeline {
     agent any
-    
+
     environment {
         IMAGE_NAME = 'portfolio-app' // Nom de l'image Docker à construire
         IMAGE_TAG = 'latest'           // Tag de l'image Docker (par exemple, latest)
+        PORT = '4200'             // Port de l'application
     }
     stages {
         stage('Build Docker Image') {
@@ -21,7 +22,7 @@ pipeline {
                 script {
                     // Exécution de l'image Docker en tant que conteneur
                     sh """
-                    docker run -d --name portfolio-app ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker run -d --name portfolio-app -p ${PORT}:4200 ${IMAGE_NAME}:${IMAGE_TAG}
                     """
                 }
             }
