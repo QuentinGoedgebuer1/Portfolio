@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer tailwind-base {
+@tailwind base;
+}
+
+@layer tailwind-utilities {
+@tailwind components;
+@tailwind utilities;
+}
+
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout";
+
+/* PrimeNG */
+@import "primeicons/primeicons.css";

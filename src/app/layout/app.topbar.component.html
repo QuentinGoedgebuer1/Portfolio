@@ -1,0 +1,59 @@
+<div class="layout-topbar">
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button mr-5" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <a class="layout-topbar-logo" routerLink="">
+        <span class="text-gray-500">Goedgebuer Quentin</span>
+    </a>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+
+    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <button class="p-link layout-topbar-button" (click)="showDialog()">
+            <i class="pi pi-user"></i>
+            <span>Profile</span>
+        </button>
+    </div>
+
+    <p-dialog [(visible)]="visible" styleClass="!border-0">
+        <ng-template #headless>
+            <div
+                class="flex flex-col px-8 py-8 gap-6 rounded-2xl"
+                style="border-radius: 12px; background-image: radial-gradient(circle at left top, var(--p-primary-400), var(--p-primary-700))"
+            >
+                <div class="inline-flex flex-col gap-2">
+                    <label for="email" class="text-primary-50 font-semibold">Email</label>
+                    <input pInputText id="email" class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80" />
+                </div>
+                <div class="inline-flex flex-col gap-2">
+                    <label for="password" class="text-primary-50 font-semibold">Mot de passe</label>
+                    <input
+                        pInputText
+                        id="password"
+                        class="!bg-white/20 !border-0 !p-4 !text-primary-50 w-80"
+                        type="password"
+                    />
+                </div>
+                <div class="flex items-center gap-4">
+                    <p-button
+                        label="Annuler"
+                        (click)="closeDialog()"
+                        [text]="true"
+                        styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
+                        class="w-full"
+                    />
+                    <p-button
+                        label="Se connecter"
+                        (click)="closeDialog()"
+                        [text]="true"
+                        styleClass="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
+                        class="w-full"
+                    />
+                </div>
+            </div>
+        </ng-template>
+    </p-dialog>
+</div>
