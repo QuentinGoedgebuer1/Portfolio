@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_POLYGON: 'OS83pjL2VUwIsipc8oxtNtH9Q7ioSwW7'
+  API_POLYGON: ''
 };
 
 /*

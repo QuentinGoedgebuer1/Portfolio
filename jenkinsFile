@@ -5,8 +5,17 @@ pipeline {
         IMAGE_NAME = 'portfolio-app' // Nom de l'image Docker à construire
         IMAGE_TAG = 'latest'           // Tag de l'image Docker (par exemple, latest)
         PORT = '4200'             // Port de l'application
+        API_POLYGON = credentials('9iLv2uf3Yn9E1byvC9BG9YhMugDnFydj') // Mot de passe de la base de données
     }
     stages {
+        stage('Replace Properties') {
+            steps {
+                // Remplacer les placeholders dans le fichier properties avec les variables Jenkins
+                sh '''
+                sed -i "s|\${API_POLYGON}|$API_POLYGON|g" environments.environment.ts
+                '''
+            }
+        }
         stage('Delete Docker container') {
             steps {
                 script {
