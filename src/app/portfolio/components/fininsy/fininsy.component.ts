@@ -268,10 +268,8 @@ export class FininsyComponent implements OnInit {
     const url = `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/day/${startDate}/${endDate}?apiKey=${apiKey}`;
 
     try {
-      console.log("Fetching data from URL:", url);
       const response = await axios.get(url);
       const data = response.data;
-      console.log("Data received:", data);
 
       if (data && data.results) {
         const prices = data.results.map((item) => ({
