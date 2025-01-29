@@ -13,12 +13,10 @@ pipeline {
                 script {
                     // Créer un fichier environment.prod.ts avec la clé API
                     sh '''
-                    cat <<EOF > src/environments/environment.ts
-                    export const environment = {
-                        production: true,
-                        API_POLYGON: "$API_POLYGON"
-                    };
-                    EOF
+                    echo "export const environment = {" > src/environments/environment.prod.ts
+                    echo "    production: true," >> src/environments/environment.prod.ts
+                    echo "    apiKey: \\"$API_POLYGON\\"" >> src/environments/environment.prod.ts
+                    echo "};" >> src/environments/environment.prod.ts
                     '''
                 }
             }
