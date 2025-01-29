@@ -8,12 +8,19 @@ pipeline {
         API_POLYGON = credentials('API_POLYGON') // Mot de passe de la base de données
     }
     stages {
-        stage('Replace Properties') {
+        stage('Generate Angular Environment File') {
             steps {
-                // Remplacer les placeholders dans le fichier properties avec les variables Jenkins
-                sh '''
-                sed -i "s|\${API_POLYGON}|$API_POLYGON|g" src/environments/environment.ts
-                '''
+                script {
+                    // Créer un fichier environment.prod.ts avec la clé API
+                    sh '''
+                    cat <<EOF > src/environments/environment.ts
+                    export const environment = {
+                        production: true,
+                        API_POLYGON: "$API_POLYGON"
+                    };
+                    EOF
+                    '''
+                }
             }
         }
         stage('Delete Docker container') {
