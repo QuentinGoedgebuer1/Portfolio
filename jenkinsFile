@@ -15,7 +15,7 @@ pipeline {
                     sh '''
                     echo "export const environment = {" > src/environments/environment.ts
                     echo "    production: true," >> src/environments/environment.ts
-                    echo "    apiKey: \\"$API_POLYGON\\"" >> src/environments/environment.ts
+                    echo "    API_POLYGON: \\"$API_POLYGON\\"" >> src/environments/environment.ts
                     echo "};" >> src/environments/environment.ts
                     '''
                 }
