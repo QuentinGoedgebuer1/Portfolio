@@ -14,6 +14,7 @@ import { CardModule } from 'primeng/card';
 import { AvatarModule } from 'primeng/avatar';
 import { ImageModule } from 'primeng/image';
 import { AnimateOnScroll } from 'primeng/animateonscroll';
+import { RouterModule } from '@angular/router';
 
 @Component({
     standalone: true,
@@ -29,7 +30,8 @@ import { AnimateOnScroll } from 'primeng/animateonscroll';
         CardModule,
         AvatarModule,
         ImageModule,
-        AnimateOnScroll
+        AnimateOnScroll, 
+        RouterModule
     ],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
