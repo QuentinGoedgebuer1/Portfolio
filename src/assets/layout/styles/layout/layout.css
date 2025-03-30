@@ -233,6 +233,7 @@ a {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  background-color: white;
 }
 .layout-menu .layout-root-menuitem > .layout-menuitem-root-text {
   font-size: 0.857rem;

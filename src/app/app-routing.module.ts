@@ -14,7 +14,6 @@ import { FininsyComponent } from './portfolio/components/fininsy/fininsy.compone
                     { path: 'fininsy', component: FininsyComponent },
                 ]
             },
-            { path: 'auth', loadChildren: () => import('./portfolio/components/auth/auth.module').then(m => m.AuthModule) },
             { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],

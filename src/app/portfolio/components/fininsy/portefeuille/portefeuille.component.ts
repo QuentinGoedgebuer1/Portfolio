@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { Table } from 'primeng/table';
+import { AuthService } from 'src/app/portfolio/core/service/auth.service';
 
 
 @Component({
@@ -34,6 +35,8 @@ export class PortefeuilleComponent {
 
   visible: boolean = false;
 
+  #authService = inject(AuthService);
+
   async ngOnInit() {
 
     this.actifs = [
@@ -56,11 +59,15 @@ export class PortefeuilleComponent {
     ];
   }
 
+  isAuthenticated() {
+    return this.#authService.getToken() !== null;
+  }
+
   clear(table: Table) {
-      table.clear();
-    }
+    table.clear();
+  }
   
-    showDialog() {
-      this.visible = true;
-    }
+  showDialog() {
+    this.visible = true;
+  }
 }
