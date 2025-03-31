@@ -33,7 +33,8 @@ export class AuthService {
         return localStorage.getItem(this.TOKEN_KEY);
     }
 
-    clearToken() {
+    logout() {
+        this.setToken(null);
         localStorage.removeItem(this.TOKEN_KEY);
     }
 }

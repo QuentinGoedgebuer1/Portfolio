@@ -175,6 +175,11 @@ export class RechercheComponent {
             {
               label: "Prix de clôture",
               data: prices.map((item) => item.close),
+              fill: false,
+              tension: 0.4,
+              backgroundColor: '#6366F1',
+              borderColor: '#6366F1',
+              borderWidth: 2
             },
           ],
         };

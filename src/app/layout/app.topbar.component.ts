@@ -39,6 +39,14 @@ export class AppTopBarComponent {
         });
     }
 
+    isAuthenticated() {
+        return this.#authService.getToken() !== null;
+    }
+
+    logout() {
+        this.#authService.logout();
+    }
+
     showDialog() {
         this.visible = true;
     }
