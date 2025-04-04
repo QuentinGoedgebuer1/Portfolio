@@ -9,7 +9,7 @@ import { lastValueFrom, Observable, tap } from 'rxjs';
 export class AuthService {
     private http = inject(HttpClient);
     // private queryClient = inject(QueryClient);
-    private apiUrl = 'api.goedgebuer.com'; // URL de l'API
+    private apiUrl = 'http://api.goedgebuer.com'; // URL de l'API
     private TOKEN_KEY = null;
 
     login = injectMutation(() => ({
