@@ -19,6 +19,8 @@ import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppLayoutComponent } from "./app.layout.component";
 import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { TabsModule } from 'primeng/tabs';
+import { Toast } from 'primeng/toast';
 
 @NgModule({
     declarations: [
@@ -43,7 +45,9 @@ import { ButtonModule } from 'primeng/button';
         RouterModule,
         AppConfigModule,
         Dialog,
-        ButtonModule
+        ButtonModule,
+        TabsModule,
+        Toast,
     ],
     exports: [AppLayoutComponent]
 })

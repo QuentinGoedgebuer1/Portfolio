@@ -1,4 +1,7 @@
 <div class="layout-topbar">
+    
+    <p-toast />
+
     <button #menubutton class="p-link layout-menu-button layout-topbar-button mr-5" (click)="layoutService.onMenuToggle()">
         <i class="pi pi-bars"></i>
     </button>
@@ -20,18 +23,55 @@
         </button>
     </div>
     
-    <p-dialog header="Connexion" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }">
-        <div class="flex items-center gap-4 mb-4">
-            <label for="email" class="font-semibold w-24">Email</label>
-            <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="email"/>
-        </div>
-        <div class="flex items-center gap-4 mb-8">
-            <label for="password" class="font-semibold w-24">Mot de passe</label>
-            <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="password"/>
-        </div>
-        <div class="flex justify-end gap-2">
-            <p-button label="Cancel" severity="secondary" (click)="closeDialog()" />
-            <p-button label="Connexion" (click)="login()" />
-        </div>
+    <p-dialog header="Authentification" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }">
+
+        <p-tabs value="0">
+            <p-tablist>
+                <p-tab value="0">Connexion</p-tab>
+                <p-tab value="1">Inscription</p-tab>
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                    <div class="flex items-center gap-4 mb-4">
+                        <label for="email" class="font-semibold w-24">Email</label>
+                        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="email"/>
+                    </div>
+                    <div class="flex items-center gap-4 mb-8">
+                        <label for="password" class="font-semibold w-24">Mot de passe</label>
+                        <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="password"/>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />
+                        <p-button label="Connexion" (click)="login()" />
+                    </div>
+                </p-tabpanel>
+                <p-tabpanel value="1">
+                    <div class="flex items-center gap-4 mb-4">
+                        <label for="email" class="font-semibold w-24">Email</label>
+                        <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="email"/>
+                    </div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <label for="nom" class="font-semibold w-24">Nom</label>
+                        <input pInputText id="nom" class="flex-auto" autocomplete="off" [(ngModel)]="nom"/>
+                    </div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <label for="prenom" class="font-semibold w-24">Prenom</label>
+                        <input pInputText id="prenom" class="flex-auto" autocomplete="off" [(ngModel)]="prenom"/>
+                    </div>
+                    <div class="flex items-center gap-4 mb-8">
+                        <label for="password" class="font-semibold w-24">Mot de passe</label>
+                        <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="password"/>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />
+                        <p-button label="Inscription" (click)="register()" />
+                    </div>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+
+
+
+        
     </p-dialog>
 </div>

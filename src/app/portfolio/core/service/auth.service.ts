@@ -25,6 +25,19 @@ export class AuthService {
         }
     })); 
 
+    register = injectMutation(() => ({
+        mutationFn: async ({ email, nom, prenom, password }: { email: string; nom: string, prenom: string; password: string }) => {
+            try {
+                return await lastValueFrom(this.http.post(`${this.apiUrl}/Utilisateur`, { email, nom, prenom, password}));
+            } catch (error) {
+                throw new Error('Erreur lors de l\'inscription');
+            }
+        },
+        onSuccess: (response: any) => {
+            console.log('success', response);
+        }
+    }));
+
     setToken(token: string) {
         localStorage.setItem(this.TOKEN_KEY, token);
     }
