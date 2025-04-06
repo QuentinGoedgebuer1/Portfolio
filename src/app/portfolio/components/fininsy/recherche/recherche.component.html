@@ -20,7 +20,7 @@
                 </p-autocomplete>
             </div>
             
-            <div class="mt-5">
+            <div *ngIf="showActifInfo" class="mt-5">
                 <div class="grid grid-cols-12">
                     <div class="col-span-12 md:col-span-6">
                         <p-card styleClass="m-5 border-2 border-gray-300">
@@ -52,6 +52,7 @@
     </div>
     
     <div 
+        *ngIf="showActifInfo"
         pAnimateOnScroll
         enterClass="animate-fadein"
         leaveClass="animate-fadeout"
