@@ -55,7 +55,7 @@ export class RechercheComponent {
 
   async filterActifs(event: AutoCompleteCompleteEvent) {
     var apiKey = environment.API_POLYGON;
-    var apiUrl = `${environment.POLYGON_API_URL}/v3/reference/tickers?type=CS&market=stocks&search=${event.query}&active=true&order=asc&limit=100&sort=ticker&apiKey=${apiKey}`;
+    var apiUrl = `https://api.polygon.io/v3/reference/tickers?type=CS&market=stocks&search=${event.query}&active=true&order=asc&limit=100&sort=ticker&apiKey=${apiKey}`;
 
     try {
       const response = await axios.get(apiUrl);
