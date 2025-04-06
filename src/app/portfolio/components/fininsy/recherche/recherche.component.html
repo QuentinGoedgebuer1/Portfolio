@@ -1,18 +1,23 @@
 <div>
     <div>
         <p-card>
-            <div class="grid grid-cols-12">
-                <div class="col-span-12 md:col-span-10">
-                    <p-iconfield styleClass="w-full">
-                        <p-inputicon styleClass="pi pi-search" />
-                        <input class="w-full" type="text" pInputText placeholder="Action a rechercher" [(ngModel)]="action"  />
-                    </p-iconfield>
-                </div>
-                <div class="col-span-12 mt-5 md:mt-0 md:col-start-11 md:col-span-2">
-                    <div class="flex justify-center">
-                        <p-button class="ml-5" label="Rechercher" icon="pi pi-arrow-right" iconPos="right" (onClick)="fetchStockData(action)" />
-                    </div>
-                </div>
+            <div>
+                <h4 class="text-center">Recherche d'un actif</h4>
+            </div>
+
+            <div class="w-full">
+                <p-autocomplete [(ngModel)]="action" fluid [suggestions]="filteredActifs" (completeMethod)="filterActifs($event)" (onSelect)="onActionSelect($event)" optionLabel="name">
+                    <ng-template let-item #item>
+                        <div class="flex items-center gap-2">
+                            <div>{{ item.ticker }}</div>
+                            <div> - </div>
+                            <div>{{ item.name }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template #header>
+                        <div class="font-medium px-3 py-2">Actifs disponible</div>
+                    </ng-template>
+                </p-autocomplete>
             </div>
             
             <div class="mt-5">

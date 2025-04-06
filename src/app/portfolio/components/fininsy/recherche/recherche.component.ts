@@ -10,6 +10,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { environment } from '../../../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 import axios from "axios";
+import { AutoCompleteModule } from 'primeng/autocomplete';
+
+interface AutoCompleteCompleteEvent {
+  originalEvent: Event;
+  query: string;
+}
 
 @Component({
   selector: 'app-recherche',
@@ -24,23 +30,46 @@ import axios from "axios";
     FormsModule,
     InputTextModule,
     TableModule,
+    AutoCompleteModule
   ],
   templateUrl: './recherche.component.html',
   styleUrl: './recherche.component.scss'
 })
 export class RechercheComponent {
 
-  action: string = 'AAPL';
+  action: any;
+
   chartData: any;
   chartOptions: any;
 
   bottomPrice: any;
   topPrice: any;
 
+  filteredActifs: any[] | undefined;
+
   async ngOnInit() {
     this.initChart();
 
-    await this.fetchStockData('AAPL');
+    await this.fetchStockData();
+  }
+
+  async filterActifs(event: AutoCompleteCompleteEvent) {
+    var apiKey = environment.API_POLYGON;
+    var apiUrl = `${environment.POLYGON_API_URL}/v3/reference/tickers?type=CS&market=stocks&search=${event.query}&active=true&order=asc&limit=100&sort=ticker&apiKey=${apiKey}`;
+
+    try {
+      const response = await axios.get(apiUrl);
+      const data = response.data;
+
+      console.log('data : ', data.results);
+      this.filteredActifs = data.results;
+
+
+      this.fetchStockData();
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
   initChart() {
@@ -48,19 +77,11 @@ export class RechercheComponent {
     const textColorSecondary = '#FFFFFF';
 
     this.chartData = {
-      labels: [
-        '10/10/2024', 
-        '11/10/2024', 
-        '14/10/2024', 
-        '15/10/2024', 
-        '16/10/2024', 
-        '17/10/2024', 
-        '18/10/2024'
-      ],
+      labels: [],
       datasets: [
         {
           label: 'Performance',
-          data: [229.04, 100, 231.3, 233.85, 400, 232.15, 235],
+          data: [],
           fill: false,
           tension: 0.4,
           backgroundColor: '#6366F1',
@@ -146,7 +167,14 @@ export class RechercheComponent {
     };
   }
 
-  async fetchStockData(symbol: string) {
+  onActionSelect(event: any) {
+    this.fetchStockData();
+  }
+
+  async fetchStockData() {
+    const symbol = this.action?.ticker;
+    if (!symbol) return;
+
     const apiKey = environment.API_POLYGON;
     const today = new Date();
     const tenDaysBefore = new Date(today.getTime() - 10 * 24 * 60 * 60 * 1000);
@@ -184,7 +212,7 @@ export class RechercheComponent {
           ],
         };
 
-        this.chartOptions.plugins.title.text = this.action;
+        this.chartOptions.plugins.title.text = this.action?.name || symbol;
         const closeValues = prices.map((item) => item.close);
         const min = Math.min(...closeValues);
         const max = Math.max(...closeValues);
