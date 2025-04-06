@@ -46,7 +46,7 @@ export class AppTopBarComponent {
     }
 
     register() {
-        this.#authService.register.mutate({ email: this.email, nom: '', prenom: '', password: this.password }, {
+        this.#authService.register.mutate({ email: this.email, nom: this.nom, prenom: this.prenom, password: this.password }, {
             onSuccess: () => {
                 this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Inscription réussie' });
                 this.closeDialog();
