@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { injectMutation } from '@tanstack/angular-query-experimental';
 import { lastValueFrom, Observable, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { lastValueFrom, Observable, tap } from 'rxjs';
 export class AuthService {
     private http = inject(HttpClient);
     // private queryClient = inject(QueryClient);
-    private apiUrl = 'https://api.goedgebuer.com'; // URL de l'API
+    private apiUrl = environment.API_PORTFOLIO;
     private TOKEN_KEY = null;
 
     login = injectMutation(() => ({
