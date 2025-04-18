@@ -1,13 +1,11 @@
 <div class="layout-topbar">
-    
-    <p-toast />
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button mr-5" (click)="layoutService.onMenuToggle()">
         <i class="pi pi-bars"></i>
     </button>
 
     <a class="layout-topbar-logo" routerLink="">
-        <span class="text-gray-500">Goedgebuer Quentin</span>
+        <span *ngIf="userInfo() as user" class="text-gray-500">{{ user.email }}</span>
     </a>
 
     <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
@@ -18,7 +16,7 @@
         <button *ngIf="!isAuthenticated()" class="p-link layout-topbar-button" (click)="showDialog()">
             <i class="pi pi-user"></i>
         </button>
-        <button *ngIf="isAuthenticated()" class="p-link layout-topbar-button" (click)="logout()">
+        <button *ngIf="isAuthenticated()" class="p-link layout-topbar-button flex items-center gap-2" (click)="logout()">
             <i class="pi pi-sign-out"></i>
         </button>
     </div>
@@ -69,9 +67,5 @@
                 </p-tabpanel>
             </p-tabpanels>
         </p-tabs>
-
-
-
-        
     </p-dialog>
 </div>

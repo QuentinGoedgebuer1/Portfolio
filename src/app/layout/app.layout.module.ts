@@ -21,6 +21,7 @@ import { Dialog } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TabsModule } from 'primeng/tabs';
 import { Toast } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { Toast } from 'primeng/toast';
         TabsModule,
         Toast,
     ],
+    providers: [MessageService],
     exports: [AppLayoutComponent]
 })
 export class AppLayoutModule { }

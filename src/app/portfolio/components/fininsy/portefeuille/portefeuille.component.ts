@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -6,6 +6,13 @@ import { ButtonModule } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { Table } from 'primeng/table';
 import { AuthService } from 'src/app/portfolio/core/service/auth.service';
+import { BadgeModule } from 'primeng/badge';
+import { AccordionModule } from 'primeng/accordion';
+import { CardModule } from 'primeng/card';
+import { PortefeuilleService } from 'src/app/portfolio/core/service/portefeuille.service';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageService } from 'primeng/api';
+import { ActifService } from 'src/app/portfolio/core/service/actif.service';
 
 
 @Component({
@@ -16,48 +23,45 @@ import { AuthService } from 'src/app/portfolio/core/service/auth.service';
     FormsModule,
     TableModule,
     ButtonModule,
-    Dialog
+    Dialog,
+    BadgeModule,
+    AccordionModule,
+    CardModule,
+    InputTextModule
   ],
   templateUrl: './portefeuille.component.html',
   styleUrl: './portefeuille.component.scss'
 })
 export class PortefeuilleComponent {
 
-  actifs!: any[];
-
-  representatives!: any[];
-
-  statuses!: any[];
-
-  loading: boolean = false;
-
-  activityValues: number[] = [0, 100];
+  constructor(private messageService: MessageService) { }
 
   visible: boolean = false;
+  
+  portefeuilleVisible: boolean = false;
+
+  portefeuille = {
+    nom: ''
+  };
+
+  actif = {
+    nom: '',
+    symbole: '',
+    montantInvesti: 0,
+    quantite: 0,
+    portefeuilleId: 0
+  };
 
   #authService = inject(AuthService);
 
-  async ngOnInit() {
+  #portefeuilleService = inject(PortefeuilleService);
 
-    this.actifs = [
-      {
-        id: 1,
-        nom: 'Apple',
-        code: 'AAPL',
-        investi: 6000,
-        montantTotal: 10000,
-        diff: 4000,
-      },
-      {
-        id: 2,
-        nom: 'Nvidia',
-        code: 'NVDA',
-        investi: 9000,
-        montantTotal: 15000,
-        diff: 6000,
-      }
-    ];
-  }
+  #actifService = inject(ActifService);
+
+  #portefeuillesQuery = this.#portefeuilleService.getPortefeuilles();
+
+  portefeuilles = computed(() => this.#portefeuillesQuery.data() ?? []);
+  portefeuillesIsLoading = computed(() => this.#portefeuillesQuery.isLoading());
 
   isAuthenticated() {
     return this.#authService.getToken() !== null;
@@ -67,7 +71,54 @@ export class PortefeuilleComponent {
     table.clear();
   }
   
-  showDialog() {
+  showDialog(portefeuilleId: number) {
     this.visible = true;
+    this.actif.portefeuilleId = portefeuilleId;
+  }
+
+  closeDialog() {
+    this.visible = false;
+  }
+
+  showPortefeuilleDialog() {
+    this.portefeuilleVisible = true;
+  }
+
+  closePortefeuilleDialog() {
+    this.portefeuilleVisible = false;
+  }
+
+  addPortefeuille() {
+    this.#portefeuilleService.addPortefeuille.mutate(
+      { nom: this.portefeuille.nom },
+      {
+        onSuccess: () => {
+          this.messageService.add({ key: 'toast', severity: 'success', summary: 'Success', detail: 'Portefeuille ajouté avec succès' });
+          this.closePortefeuilleDialog();
+        },
+        onError: () => {
+          console.log('error');
+          this.messageService.add({ key: 'toast', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'ajout du portefeuille' });
+          this.closePortefeuilleDialog();
+        },
+      }
+    );
+  }
+
+  addActif() {
+    this.#actifService.addActif.mutate(
+      { nom: this.actif.nom, symbole: this.actif.symbole, montantInvesti: this.actif.montantInvesti, quantite: this.actif.quantite, portefeuilleId: this.actif.portefeuilleId },
+      {
+        onSuccess: () => {
+          this.messageService.add({ key: 'toast', severity: 'success', summary: 'Success', detail: 'Actif ajouté avec succès' });
+          this.closeDialog();
+        },
+        onError: () => {
+          console.log('error');
+          this.messageService.add({ key: 'toast', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'ajout de l\'actif' });
+          this.closeDialog();
+        },
+      }
+    );
   }
 }
