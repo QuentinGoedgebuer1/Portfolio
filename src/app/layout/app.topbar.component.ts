@@ -10,6 +10,8 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService],
 })
 export class AppTopBarComponent {
+  constructor(public layoutService: LayoutService, private messageService: MessageService) { }
+
   email: string = '';
   nom: string = '';
   prenom: string = '';
@@ -22,44 +24,43 @@ export class AppTopBarComponent {
 
   #userInfoQuery = this.#authService.getUserInfo();
 
-  userInfo = computed(() => this.#userInfoQuery.data());
+  userInfo = computed(() => this.#userInfoQuery.data() ?? null);
   isLoading = computed(() => this.#userInfoQuery.isLoading());
 
   @ViewChild('menubutton') menuButton!: ElementRef;
   @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
   @ViewChild('topbarmenu') menu!: ElementRef;
 
-  constructor(public layoutService: LayoutService, private messageService: MessageService) { }
 
   login() {
     this.#authService.login.mutate(
       { email: this.email, password: this.password },
       {
         onSuccess: () => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Authentification réussie' });
+          this.messageService.add({ key: 'toast', severity: 'success', summary: 'Success', detail: 'Authentification réussie', life: 3000 });
           this.closeDialog();
         },
         onError: () => {
           console.log('error');
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'authentification' });
+          this.messageService.add({ key: 'toast', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'authentification', life: 3000 });
           this.closeDialog();
         },
       }
     );
   }
-
+  
   register() {
     this.#authService.register.mutate(
       { email: this.email, nom: this.nom, prenom: this.prenom, password: this.password },
       {
         onSuccess: () => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Inscription réussie' });
+          this.messageService.add({ key: 'toast', severity: 'success', summary: 'Success', detail: 'Inscription réussie' });
           this.closeDialog();
           this.login();
         },
         onError: () => {
           console.log('error');
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'inscription' });
+          this.messageService.add({ key: 'toast', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'inscription' });
           this.closeDialog();
         },
       }

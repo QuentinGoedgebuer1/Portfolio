@@ -33,7 +33,7 @@ export class PortefeuilleService {
                 return response;
             } catch (error) {
                 this.handleError(error);
-                return null;
+                throw error;
             }
         },
         enabled: !!token
@@ -52,7 +52,7 @@ export class PortefeuilleService {
         );
       } catch (error) {
         this.handleError(error);
-        return null;
+        throw error;
       }
     },
     onSuccess: (response: any) => {

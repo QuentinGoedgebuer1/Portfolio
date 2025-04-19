@@ -27,7 +27,7 @@ export class ActifService {
         );
       } catch (error) {
         this.handleError(error);
-        return null;
+        throw error;
       }
     },
     onSuccess: (response: any) => {

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { injectMutation, injectQuery, QueryClient } from '@tanstack/angular-query-experimental';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
@@ -16,36 +16,28 @@ export class AuthService {
   private router = inject(Router);
 
   login = injectMutation(() => ({
-    mutationFn: async ({ email, password }: { email: string; password: string }) => {
-      try {
-        return await lastValueFrom(
-          this.http.post<{ token: string }>(`${this.apiUrl}/Auth/Login`, { email, password })
-        );
-      } catch (error) {
-        this.handleError(error);
-        return null;
-      }
-    },
-    onSuccess: (response: { token: string }) => {
-      this.setToken(response.token);
-      this.queryClient.invalidateQueries({ queryKey: ['userInfo'] });
-    }
+    mutationFn: async ({ email, password }: { email: string; password: string }) =>
+      firstValueFrom(
+        this.http.post<{ token: string }>(`${this.apiUrl}/Auth/Login`, {
+          email,
+          password,
+        })
+      ),
+      onSuccess: (response) => this.setToken(response.token),
+      onSettled: () => this.queryClient.invalidateQueries({ queryKey: ['userInfo'] })
   }));
 
   register = injectMutation(() => ({
-    mutationFn: async ({ email, nom, prenom, password }: { email: string; nom: string; prenom: string; password: string }) => {
-      try {
-        return await lastValueFrom(
-          this.http.post(`${this.apiUrl}/Utilisateur`, { email, nom, prenom, password })
-        );
-      } catch (error) {
-        this.handleError(error);
-        return null;
-      }
-    },
-    onSuccess: (response: any) => {
-      console.log('success', response);
-    }
+    mutationFn: async ({ email, nom, prenom, password }: { email: string; nom: string; prenom: string; password: string }) => 
+      firstValueFrom(
+        this.http.post(`${this.apiUrl}/Utilisateur`, 
+          { 
+            email, 
+            nom, 
+            prenom, 
+            password 
+          })
+      )
   }));
 
   getUserInfo() {
@@ -53,22 +45,21 @@ export class AuthService {
         const token = this.getToken();
         
         return {
-        queryKey: ['userInfo'],
-        queryFn: async () => {
-            if (!token) return null;
-            try {
-            const response = await lastValueFrom(
-                this.http.get<{ email: string }>(`${this.apiUrl}/Utilisateur/userInfo`, {
-                  headers: { Authorization: `Bearer ${token}` }
-                })
-            );
-            return response;
-            } catch (error) {
-              this.handleError(error);
-              return null;
-            }
-        },
-        enabled: !!token
+          queryKey: ['userInfo'],
+          queryFn: async () => {
+              if (!token) return null;
+              try {
+                const response = await lastValueFrom(
+                  this.http.get<{ email: string }>(`${this.apiUrl}/Utilisateur/userInfo`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                  })
+                );
+              return response;
+              } catch (error) {
+                this.handleError(error);
+                throw error;
+              }
+          },
         };
     });
   }
@@ -86,7 +77,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
-    this.queryClient.invalidateQueries({ queryKey: ['userInfo'] });
   }
 
   private handleError(error: any) {

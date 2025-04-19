@@ -93,12 +93,12 @@ export class PortefeuilleComponent {
       { nom: this.portefeuille.nom },
       {
         onSuccess: () => {
-          this.messageService.add({ key: 'toast', severity: 'success', summary: 'Success', detail: 'Portefeuille ajouté avec succès' });
+          this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Portefeuille ajouté avec succès' });
           this.closePortefeuilleDialog();
         },
         onError: () => {
           console.log('error');
-          this.messageService.add({ key: 'toast', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'ajout du portefeuille' });
+          this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'ajout du portefeuille' });
           this.closePortefeuilleDialog();
         },
       }
