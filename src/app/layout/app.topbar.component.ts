@@ -54,13 +54,13 @@ export class AppTopBarComponent {
       { email: this.email, nom: this.nom, prenom: this.prenom, password: this.password },
       {
         onSuccess: () => {
-          this.messageService.add({ key: 'toast', severity: 'success', summary: 'Success', detail: 'Inscription réussie' });
+          this.messageService.add({ key: 'toast', severity: 'success', summary: 'Success', detail: 'Inscription réussie', life: 3000 });
           this.closeDialog();
           this.login();
         },
         onError: () => {
           console.log('error');
-          this.messageService.add({ key: 'toast', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'inscription' });
+          this.messageService.add({ key: 'toast', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'inscription', life: 3000 });
           this.closeDialog();
         },
       }
