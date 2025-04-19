@@ -26,7 +26,7 @@ export class PortefeuilleService {
             if (!token) return null;
             try {
                 const response = await lastValueFrom(
-                    this.http.get<{ email: string }>(`${this.apiUrl}/Portefeuille`, {
+                    this.http.get(`${this.apiUrl}/Portefeuille`, {
                         headers: { Authorization: `Bearer ${token}` }
                     })
                 );
@@ -69,8 +69,28 @@ export class PortefeuilleService {
   }
 
   private handleError(error: any) {
-    this.authService.logout();
-    this.router.navigate(['/']);
-  }
+    console.log("handleError : ", error);
+  
+    switch (error.status) {
+      case 401:
+        console.warn('Erreur 401 : non autorisé');
+        this.authService.logout();
+        this.router.navigate(['/']);
+        break;
+  
+      case 403:
+        console.warn('Erreur 403 : accès interdit');
+        // Tu peux gérer différemment si besoin
+        break;
+  
+      case 500:
+        console.error('Erreur 500 : erreur serveur');
+        break;
+  
+      default:
+        console.error(`Erreur inattendue (${error.status})`, error);
+        break;
+    }
+  }  
 
 }
