@@ -4,9 +4,9 @@
     <button #menubutton class="p-link layout-menu-button layout-topbar-button mr-5" (click)="layoutService.onMenuToggle()">
         <i class="pi pi-bars"></i>
     </button>
-
+    
     <a class="layout-topbar-logo" routerLink="">
-        <span *ngIf="userInfo() as user" class="text-gray-500">{{ user.email }}</span>
+        <span *ngIf="userInfo()" class="text-gray-500">{{ userInfo().email }}</span>
     </a>
 
     <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">

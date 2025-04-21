@@ -7,7 +7,7 @@
                         <i class="pi pi-search" style="font-size: 1.5rem"></i>
                         <span>Recherche</span>
                     </p-tab>
-                    <p-tab value="1">
+                    <p-tab *ngIf="isAuthenticated()" value="1">
                         <i class="pi pi-credit-card" style="font-size: 1.5rem"></i>
                         <span>Portefeuille</span>
                     </p-tab>
@@ -16,7 +16,7 @@
                     <p-tabpanel value="0">
                         <app-recherche />
                     </p-tabpanel>
-                    <p-tabpanel value="1">
+                    <p-tabpanel *ngIf="isAuthenticated()" value="1">
                         <app-portefeuille />
                     </p-tabpanel>
                 </p-tabpanels>

@@ -4,6 +4,7 @@ import { injectMutation, injectQuery, QueryClient } from '@tanstack/angular-quer
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private queryClient = inject(QueryClient);
   private apiUrl = environment.API_PORTFOLIO;
-  private TOKEN_KEY = 'auth_token';
+  private TOKEN_KEY = null;
   private router = inject(Router);
 
   login = injectMutation(() => ({
@@ -23,8 +24,12 @@ export class AuthService {
           password,
         })
       ),
-      onSuccess: (response) => this.setToken(response.token),
-      onSettled: () => this.queryClient.invalidateQueries({ queryKey: ['userInfo'] })
+      onSuccess: (response) =>  {
+        this.setToken(response.token);
+        if (this.queryClient) {
+          this.queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+        }
+      }
   }));
 
   register = injectMutation(() => ({
@@ -39,31 +44,44 @@ export class AuthService {
           })
       )
   }));
-
+  
   getUserInfo() {
-    return injectQuery(() => {
+    return injectQuery(() => ({
+      queryKey: ['userInfo'],
+      queryFn: async () => {
+        if (!this.isAuthenticated()) {
+          return null;
+        }
+
         const token = this.getToken();
-        
-        return {
-          queryKey: ['userInfo'],
-          queryFn: async () => {
-              if (!token) return null;
-              try {
-                const response = await lastValueFrom(
-                  this.http.get<{ email: string }>(`${this.apiUrl}/Utilisateur/userInfo`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                  })
-                );
-              return response;
-              } catch (error) {
-                this.handleError(error);
-                throw error;
-              }
-          },
-        };
-    });
+
+        try {
+          const response = await lastValueFrom(
+            this.http.get<{ email: string }>(`${this.apiUrl}/Utilisateur/userInfo`, {
+              headers: { Authorization: `Bearer ${token}` }
+            })
+          );
+          return response;
+        } catch (error) {
+          this.handleError(error);
+          throw error;
+        }
+      }
+    }));
   }
 
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
+      const decodedToken = jwtDecode(token);
+      return !this.isTokenExpired(decodedToken);
+    } catch (error) {
+      this.logout();
+      return false;
+    }
+  }
 
   setToken(token: string | null) {
     if (token) {
@@ -72,11 +90,33 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    if (!token) return null;
+
+    try {
+      const decodedToken = jwtDecode(token);
+      if (this.isTokenExpired(decodedToken)) {
+        this.logout();
+        return null;
+      }
+      return token;
+    } catch (error) {
+      this.logout();
+      return null;
+    }
+  }
+
+  private isTokenExpired(decodedToken: any): boolean {
+    if (!decodedToken.exp) return true;
+    const expirationDate = new Date(0);
+    expirationDate.setUTCSeconds(decodedToken.exp);
+    return expirationDate.valueOf() <= new Date().valueOf();
   }
 
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
+    this.queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+    this.router.navigate(['/']);
   }
 
   private handleError(error: any) {

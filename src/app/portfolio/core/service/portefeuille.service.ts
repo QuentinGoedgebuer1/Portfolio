@@ -19,24 +19,25 @@ export class PortefeuilleService {
   
   getPortefeuilles() {
     return injectQuery(() => {
-        const token = this.getToken();
         return {
         queryKey: ['portefeuilles'],
         queryFn: async () => {
-            if (!token) return null;
-            try {
-                const response = await lastValueFrom(
-                    this.http.get(`${this.apiUrl}/Portefeuille`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    })
-                );
-                return response;
-            } catch (error) {
-                this.handleError(error);
-                throw error;
-            }
+          const token = this.authService.getToken();
+          if (!token) return null;
+
+          try {
+            const response = await lastValueFrom(
+                this.http.get(`${this.apiUrl}/Portefeuille`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+            );
+            return response;
+          } catch (error) {
+              this.handleError(error);
+              throw error;
+          }
         },
-        enabled: !!token
+        enabled: !!this.authService.getToken()
         };
     });
   }
@@ -44,19 +45,19 @@ export class PortefeuilleService {
   addPortefeuille = injectMutation(() => ({
     mutationFn: async ({ nom }: { nom: string; }) => {
       try {
-        const token = this.getToken();
-        return await lastValueFrom(
+        const token = this.authService.getToken();
+        if (!token) return null;
+
+        const response = await lastValueFrom(
           this.http.post(`${this.apiUrl}/Portefeuille`, { nom }, {
             headers: { Authorization: `Bearer ${token}` }
           })
         );
+        return response;
       } catch (error) {
         this.handleError(error);
         throw error;
       }
-    },
-    onSuccess: (response: any) => {
-      console.log('success', response);
     },
     onSettled: () => {
       this.queryClient.invalidateQueries({ queryKey: ['portefeuilles'] });

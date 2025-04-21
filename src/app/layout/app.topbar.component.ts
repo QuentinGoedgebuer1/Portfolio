@@ -68,7 +68,7 @@ export class AppTopBarComponent {
   }
 
   isAuthenticated() {
-    return this.#authService.getToken() !== null;
+    return this.#authService.isAuthenticated();
   }
 
   logout() {
