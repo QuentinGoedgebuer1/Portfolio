@@ -93,12 +93,12 @@ export class PortefeuilleComponent {
       { nom: this.portefeuille.nom },
       {
         onSuccess: () => {
-          this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Portefeuille ajouté avec succès', life: 3000 });
+          this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Portefeuille ajouté avec succès', life: 1500 });
           this.closePortefeuilleDialog();
         },
         onError: () => {
           console.log('error');
-          this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'ajout du portefeuille', life: 3000 });
+          this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'ajout du portefeuille', life: 1500 });
           this.closePortefeuilleDialog();
         },
       }
@@ -110,12 +110,12 @@ export class PortefeuilleComponent {
       { nom: this.actif.nom, symbole: this.actif.symbole, montantInvesti: this.actif.montantInvesti, quantite: this.actif.quantite, portefeuilleId: this.actif.portefeuilleId },
       {
         onSuccess: () => {
-          this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Actif ajouté avec succès', life: 3000 });
+          this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Actif ajouté avec succès', life: 1500 });
           this.closeDialog();
         },
         onError: () => {
           console.log('error');
-          this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'ajout de l\'actif', life: 3000 });
+          this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'ajout de l\'actif', life: 1500 });
           this.closeDialog();
         },
       }
