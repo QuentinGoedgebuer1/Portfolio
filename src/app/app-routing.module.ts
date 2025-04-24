@@ -1,23 +1,25 @@
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { AppLayoutComponent } from "./layout/app.layout.component";
-import { DashboardComponent } from './portfolio/components/dashboard/dashboard.component';
-import { FininsyComponent } from './portfolio/components/fininsy/fininsy.component';
+import { RouterModule } from '@angular/router';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FininsyComponent } from './components/fininsy/fininsy.component';
+import { AppComponent } from './app.component';
+import { AboutComponent } from './components/about/about.component';
+import { RechercheComponent } from './components/fininsy/recherche/recherche.component';
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot([
-            {
-                path: '', component: AppLayoutComponent,
-                children: [
-                    { path: '', component: DashboardComponent },
-                    { path: 'fininsy', component: FininsyComponent },
-                ]
-            },
-            { path: '**', redirectTo: '/notfound' },
-        ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
-    ],
-    exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot([
+      {
+        path: '', component: AppComponent,
+        children: [
+          { path: '', component: DashboardComponent },
+          { path: 'fininsy', component: FininsyComponent }
+        ]
+      },
+      { path: '**', redirectTo: '/notfound' }
+    ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
+  ],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
+export class AppRoutingModule { 
 }

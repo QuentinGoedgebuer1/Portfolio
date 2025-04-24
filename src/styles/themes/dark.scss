@@ -1,0 +1,30 @@
+$primary-color: #3b82f6;
+$primary-color-text: #ffffff;
+
+$secondary-color: #8b5cf6;
+$secondary-color-text: #ffffff;
+
+$surface-ground: #1e293b;
+$surface-section: #0f172a;
+$surface-card: #1e293b;
+$surface-overlay: #1e293b;
+$surface-border: #334155;
+$surface-hover: #334155;
+
+$text-color: #f8fafc;
+$text-color-secondary: #cbd5e1;
+
+.dark {
+  --primary-color: #{$primary-color};
+  --primary-color-text: #{$primary-color-text};
+  --secondary-color: #{$secondary-color};
+  --secondary-color-text: #{$secondary-color-text};
+  --surface-ground: #{$surface-ground};
+  --surface-section: #{$surface-section};
+  --surface-card: #{$surface-card};
+  --surface-overlay: #{$surface-overlay};
+  --surface-border: #{$surface-border};
+  --surface-hover: #{$surface-hover};
+  --text-color: #{$text-color};
+  --text-color-secondary: #{$text-color-secondary};
+}

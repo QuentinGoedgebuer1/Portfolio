@@ -1,0 +1,93 @@
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" [ngClass]="{'bg-white/90 dark:bg-gray-900/90 shadow-md': scrolled, 'bg-transparent': !scrolled}">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-4 md:justify-start md:space-x-10">
+      <div class="flex justify-start lg:w-0 lg:flex-1">
+        <a href="#" class="text-xl font-bold text-primary-600 dark:text-primary-400">
+          <span>Quentin</span><span class="text-secondary-600 dark:text-secondary-400"> Goedgebuer</span>
+        </a>
+      </div>
+
+      <div>
+        <p-menubar [model]="menuItems" styleClass="!border-0"/>
+      </div>
+
+      <div>
+        <p-button [icon]="isDark() ? 'pi pi-moon' : 'pi pi-sun'" [rounded]="true" [text]="true" (onClick)="toggleTheme()"/>
+      </div>
+
+      <div>
+        <p-button [icon]="'pi pi-user'" [rounded]="true" [text]="true" (onClick)="showDialog()"/>
+      </div>
+      
+      
+      <button (click)="mobileMenuOpen = !mobileMenuOpen" 
+              class="md:hidden p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none">
+        <i class="pi" [ngClass]="mobileMenuOpen ? 'pi-times' : 'pi-bars'"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div class="md:hidden" [ngClass]="{'block': mobileMenuOpen, 'hidden': !mobileMenuOpen}">
+    <div class="pt-2 pb-4 px-4 space-y-1 bg-white dark:bg-gray-900 shadow-lg">
+      <a *ngFor="let item of menuItems" 
+          [href]="item.url" 
+          class="block py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+          (click)="mobileMenuOpen = false">
+        {{ item.label }}
+      </a>
+      
+      <div class="flex items-center space-x-2 py-2">
+        <p-button [icon]="isDark() ? 'pi-moon' :  'pi-sun'" [rounded]="true" [text]="true" (onClick)="toggleTheme()"/>
+      </div>
+    </div>
+  </div>
+
+  <p-dialog header="Authentification" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }">
+
+    <p-tabs value="0">
+        <p-tablist>
+            <p-tab value="0">Connexion</p-tab>
+            <p-tab value="1">Inscription</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="0">
+                <div class="flex items-center gap-4 mb-4">
+                    <label for="email" class="font-semibold w-24">Email</label>
+                    <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="email"/>
+                </div>
+                <div class="flex items-center gap-4 mb-8">
+                    <label for="password" class="font-semibold w-24">Mot de passe</label>
+                    <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="password"/>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />
+                    <p-button label="Connexion" (click)="login()" />
+                </div>
+            </p-tabpanel>
+            <p-tabpanel value="1">
+                <div class="flex items-center gap-4 mb-4">
+                    <label for="email" class="font-semibold w-24">Email</label>
+                    <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="email"/>
+                </div>
+                <div class="flex items-center gap-4 mb-4">
+                    <label for="nom" class="font-semibold w-24">Nom</label>
+                    <input pInputText id="nom" class="flex-auto" autocomplete="off" [(ngModel)]="nom"/>
+                </div>
+                <div class="flex items-center gap-4 mb-4">
+                    <label for="prenom" class="font-semibold w-24">Prenom</label>
+                    <input pInputText id="prenom" class="flex-auto" autocomplete="off" [(ngModel)]="prenom"/>
+                </div>
+                <div class="flex items-center gap-4 mb-8">
+                    <label for="password" class="font-semibold w-24">Mot de passe</label>
+                    <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="password"/>
+                </div>
+                <div class="flex justify-end gap-2">
+                    <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />
+                    <p-button label="Inscription" (click)="register()" />
+                </div>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+</p-dialog>
+</header>
