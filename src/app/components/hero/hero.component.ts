@@ -45,7 +45,7 @@ import { ButtonModule } from 'primeng/button';
             <div class="w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
               <div class="w-60 h-60 sm:w-76 sm:h-76 rounded-full bg-white dark:bg-gray-900 flex items-center justify-center overflow-hidden">
                 <img 
-                  src="../../../../assets/layout/images/me.jpg" 
+                  src="../../../../assets/images/me.jpg" 
                   alt="Developer profile" 
                   class="w-full h-full object-cover"
                 />
