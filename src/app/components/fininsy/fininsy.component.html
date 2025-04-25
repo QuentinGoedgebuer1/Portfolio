@@ -2,12 +2,23 @@
   <div>
     <p-menubar [model]="items" styleClass="m-10 lg:mx-52"/>
 
-    <div class="mx-0 lg:mx-52">
-        <app-recherche />
-    </div>
-  
-    <div>
-        <app-portefeuille />
+    <div class="p-4">
+        <ng-container [ngSwitch]="currentView">
+            <div *ngSwitchCase="'recherche'">
+                <app-recherche />
+            </div>
+            <div *ngSwitchCase="'portefeuille'">
+                <app-portefeuille />
+            </div>
+            <div *ngSwitchCase="'parametre'">
+                <div class="flex justify-center py-20">
+                    <h2>En développement...</h2>
+                </div>
+            </div>
+            <div *ngSwitchDefault>
+                <app-recherche />
+            </div>
+        </ng-container>
     </div>
   </div>
 </section>

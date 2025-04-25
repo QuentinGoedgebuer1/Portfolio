@@ -28,6 +28,7 @@ export class AuthService {
         this.setToken(response.token);
         if (this.queryClient) {
           this.queryClient.invalidateQueries({ queryKey: ['userInfo'] });
+          this.queryClient.invalidateQueries({ queryKey: ['portefeuilles'] });
         }
       }
   }));

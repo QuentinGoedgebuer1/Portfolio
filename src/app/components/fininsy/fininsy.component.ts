@@ -24,6 +24,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class FininsyComponent implements OnInit {
   items: MenuItem[] | undefined;
+  currentView: string = 'recherche';
   #authService = inject(AuthService);
 
   ngOnInit() {
@@ -31,20 +32,23 @@ export class FininsyComponent implements OnInit {
         {
             label: 'Recherche',
             icon: 'pi pi-search',
-            routerLink: ['/fininsy'], 
-            fragment: 'RechercheFininsy'
+            command: () => this.changeView('recherche')
         },
         {
             label: 'Portefeuille',
             icon: 'pi pi-credit-card',
-            routerLink: ['/fininsy'], 
-            fragment: 'PortefeuilleFininsy'
+            command: () => this.changeView('portefeuille')
         },
         {
           label: 'Paramètre',
-          icon: 'pi pi-cog'
+          icon: 'pi pi-cog',
+          command: () => this.changeView('parametre')
       }
     ]
+  }
+
+  changeView(view: string) {
+    this.currentView = view;
   }
 
   isAuthenticated() {

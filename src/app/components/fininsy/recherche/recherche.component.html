@@ -1,10 +1,10 @@
 <section id="RechercheFininsy">
-  <div>
+  <div class="m-10 lg:mx-52">
       <div class="m-5">
           <h4 class="text-center">Recherche d'un actif</h4>
       </div>
 
-      <div class="!m-10">
+      <div class="!m-10 animate-slide-up">
           <p-autocomplete [(ngModel)]="action" fluid [suggestions]="filteredActifs" (completeMethod)="filterActifs($event)" (onSelect)="onActionSelect($event)" optionLabel="name" styleClass="shadow-xl">
               <ng-template let-item #item>
                   <div class="flex items-center gap-2">
