@@ -39,7 +39,11 @@ export class FininsyComponent implements OnInit {
             icon: 'pi pi-credit-card',
             routerLink: ['/fininsy'], 
             fragment: 'PortefeuilleFininsy'
-        }
+        },
+        {
+          label: 'Paramètre',
+          icon: 'pi pi-cog'
+      }
     ]
   }
 
