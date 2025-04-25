@@ -8,15 +8,19 @@
       </div>
 
       <div>
-        <p-menubar [model]="menuItems" styleClass="!border-0"/>
+        <p-menubar [model]="menuItems" styleClass="!border-0 bg-transparent"/>
       </div>
 
       <div>
         <p-button [icon]="isDark() ? 'pi pi-moon' : 'pi pi-sun'" [rounded]="true" [text]="true" (onClick)="toggleTheme()"/>
       </div>
 
-      <div>
-        <p-button [icon]="'pi pi-user'" [rounded]="true" [text]="true" (onClick)="showDialog()"/>
+      <div *ngIf="!isAuthenticated()">
+        <p-button icon="pi pi-user" [rounded]="true" [text]="true" (onClick)="showDialog()"/>
+      </div>
+      
+      <div *ngIf="isAuthenticated()">
+        <p-button icon="pi pi-sign-out" [rounded]="true" [text]="true" (onClick)="logout()"/>
       </div>
       
       

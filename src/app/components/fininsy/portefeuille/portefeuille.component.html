@@ -1,4 +1,4 @@
-<section id="PortefeuilleFininsy">
+<section id="PortefeuilleFininsy" class="py-20 bg-white dark:bg-gray-900">
     <div *ngIf="isAuthenticated()" class="m-10">
         <div class="m-5">
             <div class="flex justify-between items-center">
@@ -65,7 +65,7 @@
       
                     <div class="grid grid-cols-3 gap-8 w-full">
                         <div *ngFor="let actif of portefeuille.actifs" class="flex justify-center w-full">
-                            <p-card styleClass="p-shadow-3 border-round-xl" class="w-full">
+                            <p-card styleClass="shadow-xl border-round-xl bg-white dark:bg-gray-900" class="w-full">
                                 <ng-template pTemplate="content">
                                     <div class="flex align-items-center justify-content-between p-3">
                                         <span class="text-xl font-bold">{{ actif.nom }}</span>
