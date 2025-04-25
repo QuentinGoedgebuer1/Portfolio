@@ -1,10 +1,10 @@
-<div>
+<section id="RechercheFininsy">
   <div>
-      <div class="mt-5 mb-5">
+      <div class="m-5">
           <h4 class="text-center">Recherche d'un actif</h4>
       </div>
 
-      <div class="w-full">
+      <div class="!m-10">
           <p-autocomplete [(ngModel)]="action" fluid [suggestions]="filteredActifs" (completeMethod)="filterActifs($event)" (onSelect)="onActionSelect($event)" optionLabel="name" styleClass="shadow-xl">
               <ng-template let-item #item>
                   <div class="flex items-center gap-2">
@@ -19,7 +19,7 @@
           </p-autocomplete>
       </div>
       
-      <div *ngIf="showActifInfo" class="mt-5 animate-slide-up">
+      <div *ngIf="showActifInfo" class="m-10 animate-slide-up">
           <div class="grid grid-cols-12">
               <div class="col-span-12 md:col-span-6">
                   <p-card styleClass="m-5 border-2 border-gray-300">
@@ -51,12 +51,9 @@
   
   <div 
       *ngIf="showActifInfo"
-      pAnimateOnScroll
-      enterClass="animate-fadein"
-      leaveClass="animate-fadeout"
-      class="animate-duration-1500">
+      class="animate-slide-up m-10">
       <p-card styleClass="bg-gradient-to-r from-[#172b4d] to-[#1a174d] shadow mt-10">
           <p-chart type="line" [data]="chartData" [options]="chartOptions" />
       </p-card>
   </div>
-</div>
+</section>

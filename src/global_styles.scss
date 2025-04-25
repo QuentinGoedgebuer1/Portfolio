@@ -15,140 +15,140 @@
 @import "primeicons/primeicons.css";
 
 /* Custom styles */
-html {
-  scroll-behavior: smooth;
-}
+// html {
+//   scroll-behavior: smooth;
+// }
 
-body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  @apply bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200;
-  color: var(--text-color);
-  background-color: var(--surface-ground);
-}
+// body {
+//   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+//   @apply bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200;
+//   color: var(--text-color);
+//   background-color: var(--surface-ground);
+// }
 
-.section-container {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
-  background-color: var(--surface-section);
-}
+// .section-container {
+//   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+//   background-color: var(--surface-section);
+// }
 
-.section-title {
-  @apply text-3xl md:text-4xl font-bold mb-8 md:mb-12;
-  color: var(--primary-color);
-}
+// .section-title {
+//   @apply text-3xl md:text-4xl font-bold mb-8 md:mb-12;
+//   color: var(--primary-color);
+// }
 
-.section-subtitle {
-  @apply text-xl mb-8;
-  color: var(--text-color-secondary);
-}
+// .section-subtitle {
+//   @apply text-xl mb-8;
+//   color: var(--text-color-secondary);
+// }
 
-.card {
-  @apply rounded-lg shadow-md transition-all duration-300 hover:shadow-lg;
-  background-color: var(--surface-card);
-  border: 1px solid var(--surface-border);
-}
+// .card {
+//   @apply rounded-lg shadow-md transition-all duration-300 hover:shadow-lg;
+//   background-color: var(--surface-card);
+//   border: 1px solid var(--surface-border);
+// }
 
-.btn-primary {
-  @apply font-medium py-2 px-4 rounded-md transition-colors duration-300;
-  background-color: var(--primary-color);
-  color: var(--primary-color-text);
-}
+// .btn-primary {
+//   @apply font-medium py-2 px-4 rounded-md transition-colors duration-300;
+//   background-color: var(--primary-color);
+//   color: var(--primary-color-text);
+// }
 
-.btn-primary:hover {
-  filter: brightness(110%);
-}
+// .btn-primary:hover {
+//   filter: brightness(110%);
+// }
 
-.btn-secondary {
-  @apply font-medium py-2 px-4 rounded-md transition-colors duration-300;
-  background-color: var(--secondary-color);
-  color: var(--secondary-color-text);
-}
+// .btn-secondary {
+//   @apply font-medium py-2 px-4 rounded-md transition-colors duration-300;
+//   background-color: var(--secondary-color);
+//   color: var(--secondary-color-text);
+// }
 
-.btn-secondary:hover {
-  filter: brightness(110%);
-}
+// .btn-secondary:hover {
+//   filter: brightness(110%);
+// }
 
-.btn-outline {
-  @apply font-medium py-2 px-4 rounded-md transition-colors duration-300;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
-}
+// .btn-outline {
+//   @apply font-medium py-2 px-4 rounded-md transition-colors duration-300;
+//   border: 1px solid var(--primary-color);
+//   color: var(--primary-color);
+// }
 
-.btn-outline:hover {
-  background-color: var(--surface-hover);
-}
+// .btn-outline:hover {
+//   background-color: var(--surface-hover);
+// }
 
-/* Dark mode toggle animation */
-.dark-mode-toggle {
-  @apply relative inline-flex items-center justify-center w-12 h-6 rounded-full transition-colors duration-300 cursor-pointer;
-  background-color: var(--surface-card);
-}
+// /* Dark mode toggle animation */
+// .dark-mode-toggle {
+//   @apply relative inline-flex items-center justify-center w-12 h-6 rounded-full transition-colors duration-300 cursor-pointer;
+//   background-color: var(--surface-card);
+// }
 
-.dark-mode-toggle::after {
-  content: '';
-  @apply absolute left-1 w-4 h-4 rounded-full transition-transform duration-300;
-  background-color: var(--primary-color);
-}
+// .dark-mode-toggle::after {
+//   content: '';
+//   @apply absolute left-1 w-4 h-4 rounded-full transition-transform duration-300;
+//   background-color: var(--primary-color);
+// }
 
-.dark-mode-toggle.dark::after {
-  @apply transform translate-x-6;
-}
+// .dark-mode-toggle.dark::after {
+//   @apply transform translate-x-6;
+// }
 
-/* Animation classes */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
+// /* Animation classes */
+// .animate-on-scroll {
+//   opacity: 0;
+//   transform: translateY(20px);
+//   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+// }
 
-.animate-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+// .animate-on-scroll.visible {
+//   opacity: 1;
+//   transform: translateY(0);
+// }
 
-/* PrimeNG Component Overrides */
-:root {
-  --primary-color: var(--primary-color);
-  --primary-color-text: var(--primary-color-text);
-  --surface-ground: var(--surface-ground);
-  --surface-section: var(--surface-section);
-  --surface-card: var(--surface-card);
-  --surface-overlay: var(--surface-overlay);
-  --surface-border: var(--surface-border);
-  --text-color: var(--text-color);
-  --text-color-secondary: var(--text-color-secondary);
-}
+// /* PrimeNG Component Overrides */
+// :root {
+//   --primary-color: var(--primary-color);
+//   --primary-color-text: var(--primary-color-text);
+//   --surface-ground: var(--surface-ground);
+//   --surface-section: var(--surface-section);
+//   --surface-card: var(--surface-card);
+//   --surface-overlay: var(--surface-overlay);
+//   --surface-border: var(--surface-border);
+//   --text-color: var(--text-color);
+//   --text-color-secondary: var(--text-color-secondary);
+// }
 
-.p-component {
-  background-color: var(--surface-card);
-  color: var(--text-color);
-}
+// .p-component {
+//   // background-color: var(--surface-card);
+//   // color: var(--text-color);
+// }
 
-.p-button {
-  background-color: var(--primary-color);
-  color: var(--primary-color-text);
-}
+// .p-button {
+//   background-color: var(--primary-color);
+//   color: var(--primary-color-text);
+// }
 
-.p-inputtext {
-  background-color: var(--surface-card);
-  color: var(--text-color);
-  border-color: var(--surface-border);
-}
+// .p-inputtext {
+//   background-color: var(--surface-card);
+//   color: var(--text-color);
+//   border-color: var(--surface-border);
+// }
 
-.p-card {
-  background-color: var(--surface-card);
-  color: var(--text-color);
-}
+// .p-card {
+//   background-color: var(--surface-card);
+//   color: var(--text-color);
+// }
 
-.p-tabview .p-tabview-nav {
-  background-color: var(--surface-card);
-  border-color: var(--surface-border);
-}
+// .p-tabview .p-tabview-nav {
+//   background-color: var(--surface-card);
+//   border-color: var(--surface-border);
+// }
 
-.p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  color: var(--text-color);
-}
+// .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+//   color: var(--text-color);
+// }
 
-.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-  background-color: var(--primary-color);
-  color: var(--primary-color-text);
-}
+// .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+//   background-color: var(--primary-color);
+//   color: var(--primary-color-text);
+// }

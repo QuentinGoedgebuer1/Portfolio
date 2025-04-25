@@ -1,5 +1,5 @@
 <section id="fininsy" class="min-h-screen relative pt-16 overflow-hidden">
-  <div class="m-10">
+  <!-- <div class="m-10">
         <p-tabs value="0">
             <p-tablist>
                 <p-tab value="0">
@@ -20,5 +20,16 @@
                 </p-tabpanel>
             </p-tabpanels>
         </p-tabs>
+  </div> -->
+
+  <div class="mr-10 ml-10">
+    <p-menubar [model]="items" styleClass="m-10"/>
+
+    <app-recherche />
+  
+    <app-portefeuille />
   </div>
+
+  
+
 </section>

@@ -10,12 +10,23 @@ import { DialogModule } from 'primeng/dialog';
 import { MenuItem, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { TabsModule } from 'primeng/tabs';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   standalone: true,
-  imports: [CommonModule, RouterModule, MenubarModule, ButtonModule, InputSwitchModule, FormsModule, DialogModule, TabsModule],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    MenubarModule, 
+    ButtonModule, 
+    InputSwitchModule, 
+    FormsModule, 
+    DialogModule, 
+    TabsModule,
+    InputTextModule
+  ],
 })
 export class HeaderComponent {
   scrolled = false;
