@@ -6,8 +6,8 @@ WORKDIR /app
 # Copier uniquement les fichiers nécessaires pour installer les dépendances
 COPY package*.json ./
 
-# Installer les dépendances (utilisation du cache Docker optimisée)
-RUN npm ci
+# Installer les dépendances
+RUN npm install -g
 
 # Copier le reste de l'application
 COPY . .
