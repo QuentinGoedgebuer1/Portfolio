@@ -13,7 +13,7 @@ RUN npm install -g
 COPY . .
 
 # Construire l'application Angular pour la production sans sourcemaps pour réduire la consommation mémoire
-RUN npm run build -- --configuration=production --source-map=false
+RUN npm run build --configuration=production --source-map=false
 
 # Étape 2 : Servir l'application Angular avec Nginx
 FROM nginx:alpine
