@@ -6,6 +6,23 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
+export interface Actif {
+  id: number;
+  nom: string;
+  symbole: string;
+  montantInvesti: number;
+  quantite: number;
+  prix: number;
+}
+
+export interface Portefeuille {
+  id: number;
+  nom: string;
+  actifs: Actif[];
+  nbActifs?: number;
+  totalInvesti?: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -63,6 +80,36 @@ export class PortefeuilleService {
       this.queryClient.invalidateQueries({ queryKey: ['portefeuilles'] });
     }
   }));
+
+  updateActifPrice(portefeuilleId: number, actifId: number, price: number) {
+    const portefeuilles = this.queryClient.getQueryData<Portefeuille[]>(['portefeuilles']);
+    if (!portefeuilles) return;
+  
+    const updatedPortefeuilles = portefeuilles.map(portefeuille => {
+      if (portefeuille.id !== portefeuilleId) {
+        return portefeuille;
+      }
+  
+      const updatedActifs = portefeuille.actifs.map(actif => {
+        if (actif.id !== actifId) {
+          return actif;
+        }
+
+        return {
+          ...actif,
+          prix: price
+        };
+      });
+  
+      return {
+        ...portefeuille,
+        actifs: updatedActifs
+      };
+    });
+  
+    this.queryClient.setQueryData(['portefeuilles'], updatedPortefeuilles);
+  }
+  
 
 
   getToken(): string | null {

@@ -1,9 +1,18 @@
-<section id="PortefeuilleFininsy" class="py-20">
+<section id="PortefeuilleFininsy" class="py-10">
     <div *ngIf="isAuthenticated()" class="m-10 lg:mx-52 animate-slide-up">
+
+        <div class="flex justify-center items-center m-10">
+            <span class="font-bold text-lg">Les totaux reflètent les montants investis</span>
+        </div>
+        
+        <div class="flex justify-center items-center m-10">
+            <span class="font-bold text-lg">Les valeurs globales des actifs sont arrondies</span>
+        </div>
+
         <div class="m-5">
             <div class="flex justify-between items-center">
                 <div class="flex justify-start items-center">
-                    <span class="font-bold text-lg">Total des portefeuilles : 3000€</span>
+                    <span class="font-bold text-lg">Total des portefeuilles : {{ formatCurrency(totalInvesti()) }}</span>
                 </div>
                 <div class="flex justify-end items-center">
                     <p-button label="Ajouter un portefeuille" icon="pi pi-plus" iconPos="right" (click)="showPortefeuilleDialog()" />
@@ -20,8 +29,8 @@
                 *ngIf="portefeuilleVisible"
                 [(visible)]="portefeuilleVisible"
             />
-
         </div>
+
         <p-accordion [value]="0">
             <p-accordion-panel *ngFor="let portefeuille of portefeuilles(); let i = index" [value]="i">
                 <p-accordion-header>
@@ -32,7 +41,7 @@
                     <span class="flex items-center gap-2 w-full">
                         <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
                         <span class="font-bold">{{portefeuille.nom}}</span>
-                        <span class="font-bold mx-auto">Total : 3000€</span>
+                        <span class="font-bold mx-auto">Total : {{ formatCurrency(portefeuille.totalInvesti) }}</span>
                         <p-badge [value]="'Nombre d\'actifs: ' + portefeuille.nbActifs" class="mr-2" />
                     </span>
                 </p-accordion-header>
@@ -66,16 +75,17 @@
                                                     <span class="ml-2 text-lg">{{ actif.quantite }}</span>
                                                 </div>
                                             </div>
-                                            <div class="col-12 mb-3">
+                                            <!-- <div class="col-12 mb-3">
                                                 <div class="flex align-items-center">
                                                     <i class="pi pi-wave-pulse mt-2 mr-2" style="color: green"></i>
                                                     <span class="ml-2 text-lg">49%</span>
                                                 </div>
-                                            </div>
-                                            <div class="col-12 mb-3">
+                                            </div> -->
+                                            <div *ngIf="actif.prix" class="col-12 mb-3">
                                                 <div class="flex align-items-center">
-                                                    <i class="pi pi-sort-alt mt-2 mr-2" style="color: green"></i>
-                                                    <span class="ml-2 text-lg">123€</span>
+                                                    <i [class]="(actif.prix * actif.quantite) >= actif.montantInvesti ? 'pi pi-arrow-up mt-2 mr-2' : 'pi pi-arrow-down'" [style]="(actif.prix * actif.quantite) >= actif.montantInvesti ? 'color: green' : 'color: red'"></i>
+                                                    <span class="font-medium"></span>
+                                                    <span class="ml-2 text-lg">{{formatCurrency(actif.prix * actif.quantite)}}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -85,6 +95,7 @@
                                     <div class="flex justify-center items-center gap-4 pt-2">
                                         <p-button icon="pi pi-eye" label="Details" />
                                         <p-button icon="pi pi-times" label="Supprimer" severity="danger"/>
+                                        <p-button icon="pi pi-dollar" label="Afficher le prix de l'actif" severity="secondary"  (onClick)="getPriceActif(actif.symbole, portefeuille.id, actif.id)"/>
                                     </div>
                                 </ng-template>
                             </p-card>

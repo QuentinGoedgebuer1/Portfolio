@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { Dialog } from 'primeng/dialog';
 import { AuthService } from '../../../services/auth.service';
 import { BadgeModule } from 'primeng/badge';
 import { AccordionModule } from 'primeng/accordion';
@@ -12,6 +11,8 @@ import { PortefeuilleService } from '../../../services/portefeuille.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { CreatePortefeuilleComponent } from './create-portefeuille/create-portefeuille.component';
 import { CreateActifComponent } from './create-actif/create-actif.component';
+import { environment } from 'src/environments/environment';
+import axios from 'axios';
 
 @Component({
   selector: 'app-portefeuille',
@@ -21,7 +22,6 @@ import { CreateActifComponent } from './create-actif/create-actif.component';
     FormsModule,
     TableModule,
     ButtonModule,
-    Dialog,
     BadgeModule,
     AccordionModule,
     CardModule,
@@ -45,7 +45,22 @@ export class PortefeuilleComponent {
 
   #portefeuillesQuery = this.#portefeuilleService.getPortefeuilles();
 
-  portefeuilles = computed(() => this.#portefeuillesQuery.data() ?? []);
+  portefeuilles = computed(() => {
+    const data = (this.#portefeuillesQuery.data() as any[]) ?? [];
+  
+    return data.map(portefeuille => {
+      const totalInvesti = portefeuille.actifs?.reduce((sum, actif) => sum + (actif.montantInvesti || 0), 0) ?? 0;
+      return {
+        ...portefeuille,
+        totalInvesti
+      };
+    });
+  });
+  
+  totalInvesti = computed(() => {
+    return this.portefeuilles().reduce((sum, portefeuille) => sum + portefeuille.totalInvesti, 0);
+  });
+  
   portefeuillesIsLoading = computed(() => this.#portefeuillesQuery.isLoading());
 
   isAuthenticated() {
@@ -60,4 +75,41 @@ export class PortefeuilleComponent {
   showPortefeuilleDialog() {
     this.portefeuilleVisible = true;
   }
+
+  formatCurrency(amount: number): string {
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+      useGrouping: true
+    }).format(amount);
+  }  
+
+  async getPriceActif(symbol: string, portefeuilleId: number, actifId: number): Promise<void> {
+    const apiKey = environment.API_POLYGON;
+    const apiUrl = `https://api.polygon.io/v2/aggs/ticker/${symbol}/prev?adjusted=true&apiKey=${apiKey}`;
+  
+    try {
+      const response = await axios.get(apiUrl);
+      const data = response.data;
+      const price = this.dollarsToEuros(data.results?.[0]?.c);
+  
+      if (price == null) {
+        console.error('Prix non trouvé dans la réponse', data);
+        return;
+      }
+  
+      this.#portefeuilleService.updateActifPrice(portefeuilleId, actifId, price);
+  
+    } catch (error) {
+      console.error("Erreur en récupérant le prix de l'actif :", error);
+    }
+  }
+
+  dollarsToEuros(dollars: number): number {
+    const conversionRate = 0.88;
+    return dollars * conversionRate;
+  }
+  
 }
