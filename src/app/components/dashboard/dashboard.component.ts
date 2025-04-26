@@ -19,5 +19,5 @@ import { ProjetsComponent } from '../projets/projets.component';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-
+  
 }

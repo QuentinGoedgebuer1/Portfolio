@@ -9,40 +9,18 @@
                     <p-button label="Ajouter un portefeuille" icon="pi pi-plus" iconPos="right" (click)="showPortefeuilleDialog()" />
                 </div>
             </div>
-            
-            <p-dialog header="Ajouter un nouvel actif" [(visible)]="visible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-                <div class="flex items-center gap-4 mb-4">
-                    <label for="nom" class="font-semibold w-24">Nom</label>
-                    <input pInputText id="nom" class="flex-auto" autocomplete="off" [(ngModel)]="actif.nom"/>
-                </div>
-                <div class="flex items-center gap-4 mb-4">
-                    <label for="symbole" class="font-semibold w-24">Symbole</label>
-                    <input pInputText id="symbole" class="flex-auto" autocomplete="off" [(ngModel)]="actif.symbole"/>
-                </div>
-                <div class="flex items-center gap-4 mb-4">
-                    <label for="montantInvesti" class="font-semibold w-24">Montant investi</label>
-                    <input pInputText id="montantInvesti" class="flex-auto" autocomplete="off" [(ngModel)]="actif.montantInvesti"/>
-                </div>
-                <div class="flex items-center gap-4 mb-8">
-                    <label for="quantite" class="font-semibold w-24">Quantité</label>
-                    <input pInputText id="quantite" type="quantite" class="flex-auto" autocomplete="off" [(ngModel)]="actif.quantite"/>
-                </div>
-                <div class="flex justify-end gap-2">
-                    <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />
-                    <p-button label="Ajouter" (click)="addActif()" />
-                </div>
-            </p-dialog>
-      
-            <p-dialog header="Ajouter un nouveau portefeuille" [(visible)]="portefeuilleVisible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-                <div class="flex items-center gap-4 mb-4">
-                    <label for="nom" class="font-semibold w-24">Nom</label>
-                    <input pInputText id="nom" class="flex-auto" autocomplete="off" [(ngModel)]="portefeuille.nom"/>
-                </div>
-                <div class="flex justify-end gap-2">
-                    <p-button label="Annuler" severity="secondary" (click)="closePortefeuilleDialog()" />
-                    <p-button label="Ajouter" (click)="addPortefeuille()" />
-                </div>
-            </p-dialog>
+
+            <app-create-actif 
+                *ngIf="actifVisible"
+                [(visible)]="actifVisible" 
+                [portefeuilleId]="portefeuilleSelectedId" 
+            />
+
+            <app-create-portefeuille
+                *ngIf="portefeuilleVisible"
+                [(visible)]="portefeuilleVisible"
+            />
+
         </div>
         <p-accordion [value]="0">
             <p-accordion-panel *ngFor="let portefeuille of portefeuilles(); let i = index" [value]="i">
@@ -59,8 +37,9 @@
                     </span>
                 </p-accordion-header>
                 <p-accordion-content>
-                    <div class="flex justify-end m-5">
-                        <p-button class="ml-5" icon="pi pi-plus" iconPos="right" (click)="showDialog(portefeuille.id)" />
+                    <div class="flex justify-end">
+                        <p-button class="m-5" label="Ajouter un actif" icon="pi pi-plus" iconPos="left" (click)="showActifDialog(portefeuille.id)" />
+                        <p-button class="m-5" label="Supprimer le portefeuille" icon="pi pi-times" iconPos="left" (click)="showActifDialog(portefeuille.id)" severity="danger"/>
                     </div>
       
                     <div class="grid grid-cols-3 gap-8 w-full">
@@ -104,8 +83,8 @@
                                 </ng-template>
                                 <ng-template pTemplate="footer">
                                     <div class="flex justify-center items-center gap-4 pt-2">
-                                        <p-button icon="pi pi-eye" label="Details" styleClass="p-button-sm p-button-primary"></p-button>
-                                        <!-- <p-button icon="pi pi-pencil" label="Modifier" styleClass="p-button-sm p-button-secondary"></p-button> -->
+                                        <p-button icon="pi pi-eye" label="Details" />
+                                        <p-button icon="pi pi-times" label="Supprimer" severity="danger"/>
                                     </div>
                                 </ng-template>
                             </p-card>

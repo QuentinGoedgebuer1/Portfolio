@@ -1,0 +1,20 @@
+<p-dialog 
+    header="Ajouter un nouveau portefeuille" 
+    [(visible)]="visible" 
+    (onHide)="closeDialog()"
+    [closable]="true" 
+    [modal]="true" 
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+    [style]="{ width: '50vw' }" 
+    [draggable]="false" 
+    [resizable]="false"
+    >
+    <div class="flex items-center gap-4 mb-4">
+        <label for="nom" class="font-semibold w-24">Nom</label>
+        <input pInputText id="nom" class="flex-auto" autocomplete="off" [(ngModel)]="portefeuille.nom"/>
+    </div>
+    <div class="flex justify-end gap-2">
+        <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />
+        <p-button label="Ajouter" (click)="addPortefeuille()" />
+    </div>
+</p-dialog>
