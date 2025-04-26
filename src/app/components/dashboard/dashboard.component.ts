@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
-import { HeroComponent } from '../hero/hero.component';
-import { AboutComponent } from '../about/about.component';
-import { SkillsComponent } from '../skills/skills.component';
-import { ProjectsComponent } from '../projects/projects.component';
-import { ExperienceComponent } from '../experience/experience.component';
+import { AccueilComponent } from '../accueil/accueil.component';
+import { AproposComponent } from '../apropos/apropos.component';
+import { CompetencesComponent } from '../competences/competences.component';
+import { ExperiencesComponent } from '../experiences/experiences.component';
+import { ProjetsComponent } from '../projets/projets.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    HeroComponent,
-    AboutComponent,
-    SkillsComponent,
-    ProjectsComponent,
-    ExperienceComponent
+    AccueilComponent,
+    AproposComponent,
+    CompetencesComponent,
+    ExperiencesComponent,
+    ProjetsComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'

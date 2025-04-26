@@ -1,0 +1,45 @@
+<section id="skills" class="py-20 bg-gray-50 dark:bg-gray-800">
+    <div class="section-container w-4/6 mx-auto">
+        <h2 class="text-4xl font-extrabold text-center text-gray-800 dark:text-white mb-16">Mes compétences</h2>
+      
+      <div class="mt-12">
+        <p-tabView>
+          <p-tabPanel header="Frontend">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div *ngFor="let skill of frontendSkills" class="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 transition-transform duration-300 hover:scale-105">
+                <div class="flex justify-between items-center mb-2">
+                  <h3 class="text-lg font-semibold text-gray-800 dark:text-white">{{ skill.name }}</h3>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">{{ skill.level }}/10</span>
+                </div>
+                <p-progressBar [value]="skill.level * 10" [showValue]="false" [styleClass]="'h-2 rounded-full'"></p-progressBar>
+              </div>
+            </div>
+          </p-tabPanel>
+          
+          <p-tabPanel header="Backend">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div *ngFor="let skill of backendSkills" class="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 transition-transform duration-300 hover:scale-105">
+                <div class="flex justify-between items-center mb-2">
+                  <h3 class="text-lg font-semibold text-gray-800 dark:text-white">{{ skill.name }}</h3>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">{{ skill.level }}/10</span>
+                </div>
+                <p-progressBar [value]="skill.level * 10" [showValue]="false" [styleClass]="'h-2 rounded-full'"></p-progressBar>
+              </div>
+            </div>
+          </p-tabPanel>
+          
+          <p-tabPanel header="Autres">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div *ngFor="let skill of otherSkills" class="bg-white dark:bg-gray-900 rounded-lg shadow-md p-6 transition-transform duration-300 hover:scale-105">
+                <div class="flex justify-between items-center mb-2">
+                  <h3 class="text-lg font-semibold text-gray-800 dark:text-white">{{ skill.name }}</h3>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">{{ skill.level }}/10</span>
+                </div>
+                <p-progressBar [value]="skill.level * 10" [showValue]="false" [styleClass]="'h-2 rounded-full'"></p-progressBar>
+              </div>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+</section>

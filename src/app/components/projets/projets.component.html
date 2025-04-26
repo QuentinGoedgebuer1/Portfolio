@@ -1,0 +1,50 @@
+<section id="projects" class="py-20 bg-white dark:bg-gray-900">
+    <div class="section-container w-4/6 mx-auto">
+        <h2 class="text-4xl font-extrabold text-center text-gray-800 dark:text-white mb-16">Mes projets</h2>
+      
+      <!-- <div class="flex justify-center my-8">
+        <p-selectButton [options]="categories" [(ngModel)]="selectedCategory" 
+                         (onChange)="filterProjects()" optionLabel="label" 
+                         optionValue="value"></p-selectButton>
+      </div> -->
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div *ngFor="let project of filteredProjects" class="animate-on-scroll">
+          <p-card styleClass="h-full">
+            <ng-template pTemplate="header">
+              <img [src]="project.image" [alt]="project.title" class="w-full h-48 object-cover" />
+            </ng-template>
+            
+            <div class="flex flex-wrap gap-2 mb-3">
+              <p-tag *ngFor="let tech of project.technologies" 
+                     [value]="tech" 
+                     severity="info"
+                     [rounded]="true"></p-tag>
+            </div>
+            
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">{{ project.title }}</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">{{ project.description }}</p>
+            
+            <ng-template pTemplate="footer">
+              <div class="flex justify-between mt-4">
+                <div class="flex gap-2">
+                  <a *ngIf="project.demoUrl" 
+                     [href]="project.demoUrl" 
+                     target="_blank" 
+                     pButton 
+                     icon="pi pi-external-link" 
+                     class="p-button-rounded p-button-text"></a>
+                  <a *ngIf="project.githubUrl" 
+                     [href]="project.githubUrl" 
+                     target="_blank" 
+                     pButton 
+                     icon="pi pi-github" 
+                     class="p-button-rounded p-button-text"></a>
+                </div>
+              </div>
+            </ng-template>
+          </p-card>
+        </div>
+      </div>
+    </div>
+</section>
