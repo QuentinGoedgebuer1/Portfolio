@@ -13,6 +13,7 @@ import { CreatePortefeuilleComponent } from './create-portefeuille/create-portef
 import { CreateActifComponent } from './create-actif/create-actif.component';
 import { environment } from 'src/environments/environment';
 import axios from 'axios';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-portefeuille',
@@ -27,7 +28,8 @@ import axios from 'axios';
     CardModule,
     InputTextModule,
     CreatePortefeuilleComponent,
-    CreateActifComponent
+    CreateActifComponent,
+    TooltipModule
   ],
   templateUrl: './portefeuille.component.html',
   styleUrl: './portefeuille.component.scss'

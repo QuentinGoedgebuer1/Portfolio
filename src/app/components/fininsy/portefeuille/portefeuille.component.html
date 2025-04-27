@@ -1,18 +1,22 @@
 <section id="PortefeuilleFininsy" class="py-10">
     <div *ngIf="isAuthenticated()" class="m-10 lg:mx-52 animate-slide-up">
 
-        <div class="flex justify-center items-center m-10">
-            <span class="font-bold text-lg">Les totaux reflètent les montants investis</span>
-        </div>
         
-        <div class="flex justify-center items-center m-10">
-            <span class="font-bold text-lg">Les valeurs globales des actifs sont arrondies</span>
-        </div>
 
         <div class="m-5">
             <div class="flex justify-between items-center">
                 <div class="flex justify-start items-center">
-                    <span class="font-bold text-lg">Total des portefeuilles : {{ formatCurrency(totalInvesti()) }}</span>
+                    <span class="font-bold text-lg mr-5">
+                        Total des portefeuilles : {{ formatCurrency(totalInvesti()) }}
+                    </span>
+                    <p-button [pTooltip]="tooltipContent" [tooltipOptions]="{ showDelay: 300, tooltipStyleClass: 'custom-tooltip' }" icon="pi pi-info" [rounded]="true" severity="contrast" />
+                    <ng-template #tooltipContent>
+                        <div class="flex flex-col items-center p-4">
+                            <span class="font-bold text-lg mb-2">Les totaux reflètent les montants investis</span>
+                            <span class="font-bold text-lg">Les valeurs globales des actifs sont arrondies</span>
+                        </div>
+                    </ng-template>
+
                 </div>
                 <div class="flex justify-end items-center">
                     <p-button label="Ajouter un portefeuille" icon="pi pi-plus" iconPos="right" (click)="showPortefeuilleDialog()" />
