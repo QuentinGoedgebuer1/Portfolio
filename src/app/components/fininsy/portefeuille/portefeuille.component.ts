@@ -14,6 +14,9 @@ import { CreateActifComponent } from './create-actif/create-actif.component';
 import { environment } from 'src/environments/environment';
 import axios from 'axios';
 import { TooltipModule } from 'primeng/tooltip';
+import { ActifService } from 'src/app/services/actif.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @Component({
   selector: 'app-portefeuille',
@@ -29,13 +32,16 @@ import { TooltipModule } from 'primeng/tooltip';
     InputTextModule,
     CreatePortefeuilleComponent,
     CreateActifComponent,
-    TooltipModule
+    TooltipModule,
+    ConfirmPopupModule
   ],
   templateUrl: './portefeuille.component.html',
   styleUrl: './portefeuille.component.scss'
 })
 export class PortefeuilleComponent {
 
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) { }
+  
   actifVisible: boolean = false;
   
   portefeuilleVisible: boolean = false;
@@ -44,6 +50,7 @@ export class PortefeuilleComponent {
 
   #authService = inject(AuthService);
   #portefeuilleService = inject(PortefeuilleService);
+  #actifService = inject(ActifService);
 
   #portefeuillesQuery = this.#portefeuilleService.getPortefeuilles();
 
@@ -76,6 +83,78 @@ export class PortefeuilleComponent {
 
   showPortefeuilleDialog() {
     this.portefeuilleVisible = true;
+  }
+
+  confirmDeleteActif(event: Event, id: number) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Etes-vous sûr de vouloir supprimer cet actif ?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        rejectButtonProps: {
+            label: 'Annuler',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptButtonProps: {
+            label: 'Supprimer',
+            severity: 'danger'
+        },
+        accept: () => {
+          this.deleteActif(id);
+        }
+    });
+  }
+
+  deleteActif(id: number) {
+    this.#actifService.deleteActif.mutate(
+      { id: id },
+      {
+        onSuccess: () => {
+          this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Actif supprimé avec succès', life: 1500 });
+        },
+        onError: () => {
+          console.log('error');
+          this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de la suppression de l\'actif', life: 1500 });
+        },
+      }
+    );
+  }
+
+  confirmDeletePortefeuille(event: Event, id: number) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Etes-vous sûr de vouloir supprimer ce portefeuille ?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        rejectButtonProps: {
+            label: 'Annuler',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptButtonProps: {
+            label: 'Supprimer',
+            severity: 'danger'
+        },
+        accept: () => {
+          this.deletePortefeuille(id);
+        }
+    });
+  }
+
+  deletePortefeuille(id: number) {
+    this.#portefeuilleService.deletePortefeuille.mutate(
+      { id: id },
+      {
+        onSuccess: () => {
+          this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Actif supprimé avec succès', life: 1500 });
+        },
+        onError: () => {
+          console.log('error');
+          this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de la suppression de l\'actif', life: 1500 });
+        },
+      }
+    );
   }
 
   formatCurrency(amount: number): string {

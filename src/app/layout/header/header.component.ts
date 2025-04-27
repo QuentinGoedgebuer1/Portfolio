@@ -38,13 +38,13 @@ export class HeaderComponent {
     { label: 'Accueil', routerLink: ['/'], fragment: 'home' },
     { label: 'A propos', routerLink: ['/'], fragment: 'about' },
     { label: 'Compétences', routerLink: ['/'], fragment: 'skills' },
-    { label: 'Experience', routerLink: '/', fragment: 'experience' },
+    { label: 'Experience', routerLink: ['/'], fragment: 'experience' },
     { 
       label: 'Projets',
       items: [
         {
           label: 'Tous les projets', 
-          routerLink: '/', 
+          routerLink: ['/'], 
           fragment: 'projects'
         },
         {

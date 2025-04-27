@@ -1,8 +1,6 @@
 <section id="PortefeuilleFininsy" class="py-10">
     <div *ngIf="isAuthenticated()" class="m-10 lg:mx-52 animate-slide-up">
-
-        
-
+        <p-confirmpopup />
         <div class="m-5">
             <div class="flex justify-between items-center">
                 <div class="flex justify-start items-center">
@@ -52,7 +50,7 @@
                 <p-accordion-content>
                     <div class="flex justify-end">
                         <p-button class="m-5" label="Ajouter un actif" icon="pi pi-plus" iconPos="left" (click)="showActifDialog(portefeuille.id)" />
-                        <p-button class="m-5" label="Supprimer le portefeuille" icon="pi pi-times" iconPos="left" (click)="showActifDialog(portefeuille.id)" severity="danger"/>
+                        <p-button class="m-5" label="Supprimer le portefeuille" icon="pi pi-times" iconPos="left" severity="danger" (click)="confirmDeletePortefeuille($event, portefeuille.id)" />
                     </div>
       
                     <div class="grid grid-cols-3 gap-8 w-full">
@@ -98,7 +96,7 @@
                                 <ng-template pTemplate="footer">
                                     <div class="flex justify-center items-center gap-4 pt-2">
                                         <p-button icon="pi pi-eye" label="Details" />
-                                        <p-button icon="pi pi-times" label="Supprimer" severity="danger"/>
+                                        <p-button icon="pi pi-times" label="Supprimer" severity="danger" (onClick)="confirmDeleteActif($event, actif.id)" />
                                         <p-button icon="pi pi-dollar" label="Afficher le prix de l'actif" severity="secondary"  (onClick)="getPriceActif(actif.symbole, portefeuille.id, actif.id)"/>
                                     </div>
                                 </ng-template>

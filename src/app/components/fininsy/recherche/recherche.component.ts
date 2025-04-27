@@ -63,10 +63,7 @@ export class RechercheComponent {
       const response = await axios.get(apiUrl);
       const data = response.data;
 
-      console.log('data : ', data.results);
       this.filteredActifs = data.results;
-
-
       this.fetchStockData();
 
     } catch (error) {
@@ -204,7 +201,7 @@ export class RechercheComponent {
           datasets: [
             {
               label: "Prix de clôture",
-              data: prices.map((item) => item.close),
+              data: prices.map((item) => this.dollarsToEuros(item.close).toFixed(2)),
               fill: false,
               tension: 0.4,
               backgroundColor: '#6366F1',
@@ -229,5 +226,10 @@ export class RechercheComponent {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  }
+
+  dollarsToEuros(dollars: number): number {
+    const conversionRate = 0.88;
+    return dollars * conversionRate;
   }
 }

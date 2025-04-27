@@ -12,35 +12,51 @@ export class ActifService {
   private http = inject(HttpClient);
   private queryClient = inject(QueryClient);
   private apiUrl = environment.API_PORTFOLIO;
-  private TOKEN_KEY = 'auth_token';
   private authService = inject(AuthService);
   private router = inject(Router);
   
   addActif = injectMutation(() => ({
     mutationFn: async ({ nom, symbole, montantInvesti, quantite, portefeuilleId }: { nom: string; symbole: string; montantInvesti: number; quantite: number; portefeuilleId: number; }) => {
       try {
-        const token = this.getToken();
-        return await lastValueFrom(
+        const token = this.authService.getToken();
+        if (!token) return null;
+
+        const response = await lastValueFrom(
           this.http.post(`${this.apiUrl}/Actif`, { nom, symbole, montantInvesti, quantite, portefeuilleId }, {
             headers: { Authorization: `Bearer ${token}` }
           })
         );
+        return response;
       } catch (error) {
         this.handleError(error);
         throw error;
       }
-    },
-    onSuccess: (response: any) => {
-      console.log('success', response);
     },
     onSettled: () => {
       this.queryClient.invalidateQueries({ queryKey: ['portefeuilles'] });
     }
   }));
 
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
-  }
+  deleteActif = injectMutation(() => ({
+    mutationFn: async ({ id }: { id: number }) => {
+      try {
+        const token = this.authService.getToken();
+        if (!token) return null;
+        const response = await lastValueFrom(
+          this.http.delete(`${this.apiUrl}/Actif/${id}`, {
+            headers: { Authorization: "Bearer " + token }
+          })
+        );
+        return response;
+      } catch (error) {
+        this.handleError(error);
+        throw error;
+      }
+    },
+    onSettled: () => {
+      this.queryClient.invalidateQueries({ queryKey: ['portefeuilles'] });
+    }
+  }));
 
   private handleError(error: any) {
     console.log("handleError : ", error);

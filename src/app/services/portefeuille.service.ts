@@ -30,7 +30,6 @@ export class PortefeuilleService {
   private http = inject(HttpClient);
   private queryClient = inject(QueryClient);
   private apiUrl = environment.API_PORTFOLIO;
-  private TOKEN_KEY = 'auth_token';
   private router = inject(Router);
   private authService = inject(AuthService);
   
@@ -81,6 +80,28 @@ export class PortefeuilleService {
     }
   }));
 
+  deletePortefeuille = injectMutation(() => ({
+    mutationFn: async ({ id }: { id: number }) => {
+      try {
+        const token = this.authService.getToken();
+        if (!token) return null;
+
+        const response = await lastValueFrom(
+          this.http.delete(`${this.apiUrl}/Portefeuille/${id}`, {
+            headers: { Authorization: "Bearer " + token }
+          })
+        );
+        return response;
+      } catch (error) {
+        this.handleError(error);
+        throw error;
+      }
+    },
+    onSettled: () => {
+      this.queryClient.invalidateQueries({ queryKey: ['portefeuilles'] });
+    }
+  }));
+
   updateActifPrice(portefeuilleId: number, actifId: number, price: number) {
     const portefeuilles = this.queryClient.getQueryData<Portefeuille[]>(['portefeuilles']);
     if (!portefeuilles) return;
@@ -108,12 +129,6 @@ export class PortefeuilleService {
     });
   
     this.queryClient.setQueryData(['portefeuilles'], updatedPortefeuilles);
-  }
-  
-
-
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
   }
 
   private handleError(error: any) {

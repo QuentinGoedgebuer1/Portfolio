@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { provideQueryClient, QueryClient } from '@tanstack/angular-query-experimental';
 import { HeaderComponent } from './layout/header/header.component';
@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     MessageService,
+    ConfirmationService,
     { provide: LocationStrategy, useClass: PathLocationStrategy },
     provideQueryClient(new QueryClient)
   ],
