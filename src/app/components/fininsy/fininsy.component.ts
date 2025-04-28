@@ -30,6 +30,15 @@ export class FininsyComponent implements OnInit {
   #authService = inject(AuthService);
 
   ngOnInit() {
+    this.buildMenuBar();
+    this.#authService.loginStatusChanged.subscribe((loggedIn) => {
+      if (loggedIn) {
+        this.buildMenuBar();
+      }
+    });
+  }
+
+  buildMenuBar() {
     this.items = [
       {
           label: 'Recherche',

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { injectMutation, injectQuery, QueryClient } from '@tanstack/angular-query-experimental';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
@@ -15,6 +15,7 @@ export class AuthService {
   private apiUrl = environment.API_PORTFOLIO;
   private TOKEN_KEY = null;
   private router = inject(Router);
+  loginStatusChanged = new BehaviorSubject<boolean>(false);
 
   login = injectMutation(() => ({
     mutationFn: async ({ email, password }: { email: string; password: string }) =>
@@ -30,6 +31,7 @@ export class AuthService {
           this.queryClient.invalidateQueries({ queryKey: ['userInfo'] });
           this.queryClient.invalidateQueries({ queryKey: ['portefeuilles'] });
         }
+        this.loginStatusChanged.next(true);
       }
   }));
 
