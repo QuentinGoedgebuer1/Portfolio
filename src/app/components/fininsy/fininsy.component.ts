@@ -7,6 +7,7 @@ import { TabsModule  } from 'primeng/tabs';
 import { AuthService } from '../../services/auth.service';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
+import { BudgetComponent } from './budget/budget.component';
 
 @Component({
   selector: 'app-fininsy',
@@ -17,7 +18,8 @@ import { MenuItem } from 'primeng/api';
     RechercheComponent,
     PortefeuilleComponent,
     CardModule,
-    MenubarModule
+    MenubarModule,
+    BudgetComponent
   ],
   templateUrl: './fininsy.component.html',
   styleUrl: './fininsy.component.scss'
@@ -29,20 +31,28 @@ export class FininsyComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
-        {
-            label: 'Recherche',
-            icon: 'pi pi-search',
-            command: () => this.changeView('recherche')
-        },
-        {
-            label: 'Portefeuille',
-            icon: 'pi pi-credit-card',
-            command: () => this.changeView('portefeuille')
-        },
-        {
-          label: 'Paramètre',
-          icon: 'pi pi-cog',
-          command: () => this.changeView('parametre')
+      {
+          label: 'Recherche',
+          icon: 'pi pi-search',
+          command: () => this.changeView('recherche')
+      },
+      {
+          label: 'Portefeuille',
+          icon: 'pi pi-credit-card',
+          visible: this.isAuthenticated(),
+          command: () => this.changeView('portefeuille')
+      },
+      {
+        label: 'Budget',
+        icon: 'pi pi-wallet',
+        visible: this.isAuthenticated(),
+        command: () => this.changeView('budget')
+      },
+      {
+        label: 'Paramètre',
+        icon: 'pi pi-cog',
+        visible: this.isAuthenticated(),
+        command: () => this.changeView('parametre')
       }
     ]
   }
