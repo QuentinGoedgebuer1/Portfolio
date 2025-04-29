@@ -5,8 +5,40 @@
         <p class="text-gray-500">Visualisez vos dépenses sur le mois</p>
       </div>
   
+      <div class="flex justify-end mb-4">
+        <p-button type="button" icon="pi pi-plus" label="Ajouter une dépense" class="p-button-primary"></p-button>
+      </div>
       <div class="rounded-2xl shadow-lg overflow-hidden p-6 bg-white dark:bg-gray-900">
-        <full-calendar [options]="calendarOptions"></full-calendar>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="lg:col-span-1">
+            <p-table [value]="depensesFixes">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>Nom</th>
+                  <th>Montant</th>
+                  <th>Jour</th>
+                  <th>Action</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-depense>
+                <tr>
+                  <td>{{ depense.title }}</td>
+                  <td>{{ depense.montant | currency:'EUR' }}</td>
+                  <td>{{ depense.date }}</td>
+                  <td>
+                    <div class="flex">
+                      <button pButton type="button" icon="pi pi-pencil" class="p-button-text p-1" (click)="modifier(depense)"></button>
+                      <button pButton type="button" icon="pi pi-trash" class="p-button-text p-1" (click)="supprimer(depense)"></button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <div class="lg:col-span-2">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+          </div>
+        </div>
       </div>      
     </div>
   </section>
