@@ -19,9 +19,20 @@
           <p-button icon="pi pi-user" [rounded]="true" [text]="true" (onClick)="showDialog()"/>
         </div>
         
-        <div *ngIf="isAuthenticated()">
-          <p-button icon="pi pi-sign-out" [rounded]="true" [text]="true" (onClick)="logout()"/>
-        </div>
+        <ng-container *ngIf="isAuthenticated() && userInfo() as user">
+          <div class="flex items-center gap-2">
+            <button
+              pButton
+              type="button"
+              icon="pi pi-sign-out"
+              (click)="logout()"
+              class="p-button-rounded p-button-text"
+              aria-label="Logout"
+            ></button>
+            <span class="text-lg font-medium">{{ user.email }}</span>
+          </div>
+        </ng-container>
+        
         
         
         <button (click)="mobileMenuOpen = !mobileMenuOpen" 
