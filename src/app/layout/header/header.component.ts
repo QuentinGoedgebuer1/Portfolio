@@ -38,7 +38,7 @@ export class HeaderComponent {
     { label: 'Accueil', routerLink: ['/'], fragment: 'home' },
     { label: 'A propos', routerLink: ['/'], fragment: 'about' },
     { label: 'Compétences', routerLink: ['/'], fragment: 'skills' },
-    { label: 'Experience', routerLink: ['/'], fragment: 'experience' },
+    // { label: 'Experience', routerLink: ['/'], fragment: 'experience' },
     { 
       label: 'Projets',
       items: [
@@ -96,11 +96,15 @@ export class HeaderComponent {
         onSuccess: () => {
           this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Authentification réussie', life: 1500 });
           this.closeDialog();
+          this.email = '';
+          this.password = '';
         },
         onError: () => {
           console.log('error');
           this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'authentification', life: 1500 });
           this.closeDialog();
+          this.email = '';
+          this.password = '';
         },
       }
     );
@@ -114,11 +118,19 @@ export class HeaderComponent {
           this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Inscription réussie', life: 1500 });
           this.closeDialog();
           this.login();
+          this.email = '';
+          this.password = '';
+          this.nom = '';
+          this.prenom = '';
         },
         onError: () => {
           console.log('error');
           this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'inscription', life: 1500 });
           this.closeDialog();
+          this.email = '';
+          this.password = '';
+          this.nom = '';
+          this.prenom = '';
         },
       }
     );
@@ -139,5 +151,13 @@ export class HeaderComponent {
 
   closeDialog() {
     this.visible = false;
+    this.clearModel();
+  }
+
+  clearModel() {
+    this.email = '';
+    this.nom = '';
+    this.prenom = '';
+    this.password = '';
   }
 }
