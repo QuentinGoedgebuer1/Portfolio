@@ -19,7 +19,29 @@ export class DataService {
       githubUrl: 'https://github.com/QuentinGoedgebuer1/Portfolio/tree/main/src/app/components/fininsy',
       featured: true,
       category: 'fullstack'
-    }
+    },
+    {
+      id: 2,
+      title: 'ChessCube',
+      description: 'Application de jeu d\'échecs avec un personnage a la 3e personne en ligne en ligne créer via Unity.',
+      technologies: ['C#', 'Unity 6'],
+      image: '../../../assets/images/viewAvailableTilesChessCube.png',
+      demoUrl: '',
+      githubUrl: '',
+      featured: false,
+      category: 'game'
+    },
+    {
+      id: 2,
+      title: 'DIntellect',
+      description: 'Bot discord connecté a ChatGpt via des commande vocal.',
+      technologies: ['Node', 'Javascript', 'Discord.js', 'ChatGPT', 'API'],
+      image: '../../../assets/images/botgpt.png',
+      demoUrl: '',
+      githubUrl: '',
+      featured: false,
+      category: 'bot'
+    }  
   ]);
 
   private experiences = new BehaviorSubject<Experience[]>([
@@ -82,34 +104,5 @@ export class DataService {
 
   getSkills(): Observable<Skill[]> {
     return this.skills.asObservable();
-  }
-
-  getFeaturedProjects(): Observable<Project[]> {
-    return new Observable<Project[]>(observer => {
-      this.getProjects().subscribe(projects => {
-        observer.next(projects.filter(project => project.featured));
-        observer.complete();
-      });
-    });
-  }
-
-  getProjectsByCategory(category: string): Observable<Project[]> {
-    return new Observable<Project[]>(observer => {
-      this.getProjects().subscribe(projects => {
-        observer.next(category === 'all' 
-          ? projects 
-          : projects.filter(project => project.category === category));
-        observer.complete();
-      });
-    });
-  }
-
-  getProjectById(id: number): Observable<Project | undefined> {
-    return new Observable<Project | undefined>(observer => {
-      this.getProjects().subscribe(projects => {
-        observer.next(projects.find(project => project.id === id));
-        observer.complete();
-      });
-    });
   }
 }

@@ -69,11 +69,11 @@
               <p-tabpanel value="0">
                   <div class="flex items-center gap-4 mb-4">
                       <label for="email" class="font-semibold w-24">Email</label>
-                      <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="email"/>
+                      <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="model.email"/>
                   </div>
                   <div class="flex items-center gap-4 mb-8">
                       <label for="password" class="font-semibold w-24">Mot de passe</label>
-                      <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="password"/>
+                      <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="model.password"/>
                   </div>
                   <div class="flex justify-end gap-2">
                       <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />
@@ -83,19 +83,19 @@
               <p-tabpanel value="1">
                   <div class="flex items-center gap-4 mb-4">
                       <label for="email" class="font-semibold w-24">Email</label>
-                      <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="email"/>
+                      <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="model.email"/>
                   </div>
                   <div class="flex items-center gap-4 mb-4">
                       <label for="nom" class="font-semibold w-24">Nom</label>
-                      <input pInputText id="nom" class="flex-auto" autocomplete="off" [(ngModel)]="nom"/>
+                      <input pInputText id="nom" class="flex-auto" autocomplete="off" [(ngModel)]="model.nom"/>
                   </div>
                   <div class="flex items-center gap-4 mb-4">
                       <label for="prenom" class="font-semibold w-24">Prenom</label>
-                      <input pInputText id="prenom" class="flex-auto" autocomplete="off" [(ngModel)]="prenom"/>
+                      <input pInputText id="prenom" class="flex-auto" autocomplete="off" [(ngModel)]="model.prenom"/>
                   </div>
                   <div class="flex items-center gap-4 mb-8">
                       <label for="password" class="font-semibold w-24">Mot de passe</label>
-                      <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="password"/>
+                      <input pInputText id="password" type="password" class="flex-auto" autocomplete="off" [(ngModel)]="model.password"/>
                   </div>
                   <div class="flex justify-end gap-2">
                       <p-button label="Annuler" severity="secondary" (click)="closeDialog()" />

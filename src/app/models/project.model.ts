@@ -8,5 +8,5 @@ export interface Project {
   demoUrl?: string;
   githubUrl?: string;
   featured: boolean;
-  category: 'frontend' | 'backend' | 'fullstack' | 'mobile';
+  category: 'frontend' | 'backend' | 'fullstack' | 'bot' | 'game';
 }

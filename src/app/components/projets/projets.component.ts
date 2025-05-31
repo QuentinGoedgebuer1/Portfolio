@@ -48,39 +48,24 @@ export class ProjetsComponent {
       
       // Enable animations after the projects are loaded
       setTimeout(() => {
-        this.initScrollAnimation();
+        // this.initScrollAnimation();
       }, 100);
     });
   }
   
-  filterProjects(): void {
-    if (this.selectedCategory === 'all') {
-      this.filteredProjects = [...this.projects];
-    } else {
-      this.filteredProjects = this.projects.filter(
-        project => project.category === this.selectedCategory
-      );
-    }
-  }
-  
-  showProjectDetails(project: Project): void {
-    this.selectedProject = project;
-    this.displayDialog = true;
-  }
-  
-  private initScrollAnimation(): void {
-    const animateElements = document.querySelectorAll('.animate-on-scroll');
+  // private initScrollAnimation(): void {
+  //   const animateElements = document.querySelectorAll('.animate-on-scroll');
     
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
+  //   const observer = new IntersectionObserver((entries) => {
+  //     entries.forEach(entry => {
+  //       if (entry.isIntersecting) {
+  //         entry.target.classList.add('visible');
+  //       }
+  //     });
+  //   }, { threshold: 0.1 });
     
-    animateElements.forEach(element => {
-      observer.observe(element);
-    });
-  }
+  //   animateElements.forEach(element => {
+  //     observer.observe(element);
+  //   });
+  // }
 }

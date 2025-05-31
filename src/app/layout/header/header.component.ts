@@ -55,10 +55,12 @@ export class HeaderComponent {
     }
   ];
 
-  email: string = '';
-  nom: string = '';
-  prenom: string = '';
-  password: string = '';
+  model = {
+    email: '',
+    nom: '',
+    prenom: '',
+    password: ''
+  };
   visible: boolean = false;
 
   items!: MenuItem;
@@ -91,20 +93,20 @@ export class HeaderComponent {
 
   login() {
     this.#authService.login.mutate(
-      { email: this.email, password: this.password },
+      { email: this.model.email, password: this.model.password },
       {
         onSuccess: () => {
           this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Authentification réussie', life: 1500 });
           this.closeDialog();
-          this.email = '';
-          this.password = '';
+          this.model.email = '';
+          this.model.password = '';
         },
         onError: () => {
           console.log('error');
           this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'authentification', life: 1500 });
           this.closeDialog();
-          this.email = '';
-          this.password = '';
+          this.model.email = '';
+          this.model.password = '';
         },
       }
     );
@@ -112,25 +114,17 @@ export class HeaderComponent {
   
   register() {
     this.#authService.register.mutate(
-      { email: this.email, nom: this.nom, prenom: this.prenom, password: this.password },
+      { email: this.model.email, nom: this.model.nom, prenom: this.model.prenom, password: this.model.password },
       {
         onSuccess: () => {
           this.messageService.add({ key: 'global', severity: 'success', summary: 'Success', detail: 'Inscription réussie', life: 1500 });
           this.closeDialog();
           this.login();
-          this.email = '';
-          this.password = '';
-          this.nom = '';
-          this.prenom = '';
         },
         onError: () => {
           console.log('error');
           this.messageService.add({ key: 'global', severity: 'error', summary: 'Error', detail: 'Erreur lors de l\'inscription', life: 1500 });
           this.closeDialog();
-          this.email = '';
-          this.password = '';
-          this.nom = '';
-          this.prenom = '';
         },
       }
     );
@@ -155,9 +149,11 @@ export class HeaderComponent {
   }
 
   clearModel() {
-    this.email = '';
-    this.nom = '';
-    this.prenom = '';
-    this.password = '';
+    this.model = {
+      email: '',
+      nom: '',
+      prenom: '',
+      password: ''
+    }
   }
 }
