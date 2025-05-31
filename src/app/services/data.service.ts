@@ -12,7 +12,7 @@ export class DataService {
     {
       id: 1,
       title: 'Fininsy',
-      description: 'Plateforme permettant de consulter les différents actifs boursier, de gérer ces finances personnelles et de pouvoir gérer son budget.',
+      description: 'Plateforme permettant de consulter les différents actifs boursiers, de diriger ses finances personnelles et de pouvoir gérer son budget.',
       technologies: ['Angular', 'Primeng', 'Tailwindcss', '.Net', 'API', 'SQL Server', 'Docker', 'Jenkins', 'VPS'],
       image: 'https://www.affacturage.fr/img/produits/budget.jpg',
       demoUrl: 'https://goedgebuer.com/fininsy',
@@ -23,7 +23,7 @@ export class DataService {
     {
       id: 2,
       title: 'ChessCube',
-      description: 'Application de jeu d\'échecs avec un personnage a la 3e personne en ligne en ligne créer via Unity.',
+      description: 'Application de jeu d\'échecs avec un personnage à la 3e personne en ligne créée via Unity.',
       technologies: ['C#', 'Unity 6'],
       image: '../../../assets/images/viewAvailableTilesChessCube.png',
       demoUrl: '',
@@ -34,7 +34,7 @@ export class DataService {
     {
       id: 2,
       title: 'DIntellect',
-      description: 'Bot discord connecté a ChatGpt via des commande vocal.',
+      description: 'Bot Discord connecté à ChatGPT via des commandes vocales.',
       technologies: ['Node', 'Javascript', 'Discord.js', 'ChatGPT', 'API'],
       image: '../../../assets/images/botgpt.png',
       demoUrl: '',
