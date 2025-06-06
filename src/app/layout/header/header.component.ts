@@ -33,19 +33,34 @@ export class HeaderComponent {
   mobileMenuOpen = false;
   themeService = inject(ThemeService);
   isDarkMode = false;
+
+  #authService = inject(AuthService);
+
+  #userInfoQuery = this.#authService.getUserInfo();
+
+  userInfo = computed(() => this.#userInfoQuery.data() ?? null);
+  isLoading = computed(() => this.#userInfoQuery.isLoading());
   
   menuItems = [
-    { label: 'Accueil', routerLink: ['/'], fragment: 'home' },
-    { label: 'A propos', routerLink: ['/'], fragment: 'about' },
-    { label: 'Compétences', routerLink: ['/'], fragment: 'skills' },
+    { 
+      label: 'Accueil', 
+      command: () => this.scrollToSection('home') 
+    },
+    { 
+      label: 'A propos',
+      command: () => this.scrollToSection('about')
+    },
+    { 
+      label: 'Compétences',
+      command: () => this.scrollToSection('skills')
+    },
     // { label: 'Experience', routerLink: ['/'], fragment: 'experience' },
     { 
       label: 'Projets',
       items: [
         {
-          label: 'Tous les projets', 
-          routerLink: ['/'], 
-          fragment: 'projects'
+          label: 'Tous les projets',
+          command: () => this.scrollToSection('projects')
         },
         {
           label: 'Fininsy',
@@ -61,21 +76,20 @@ export class HeaderComponent {
     prenom: '',
     password: ''
   };
+
   visible: boolean = false;
 
-  items!: MenuItem;
-
-  #authService = inject(AuthService);
-
-  #userInfoQuery = this.#authService.getUserInfo();
-
-  userInfo = computed(() => this.#userInfoQuery.data() ?? null);
-  isLoading = computed(() => this.#userInfoQuery.isLoading());
-  
   constructor(private messageService: MessageService) {
     this.themeService.darkMode$.subscribe(isDark => {
       this.isDarkMode = isDark;
     });
+  }
+
+  scrollToSection(fragment: string) {
+    const element = document.getElementById(fragment);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
   
   @HostListener('window:scroll', [])
