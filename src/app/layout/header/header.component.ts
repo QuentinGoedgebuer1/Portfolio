@@ -1,7 +1,8 @@
 import { Component, computed, HostListener, inject } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -11,6 +12,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { TabsModule } from 'primeng/tabs';
 import { InputTextModule } from 'primeng/inputtext';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +31,16 @@ import { InputTextModule } from 'primeng/inputtext';
   ],
 })
 export class HeaderComponent {
+
+  constructor(
+    private messageService: MessageService,
+    private router: Router) 
+  {
+    this.themeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
+  }
+
   scrolled = false;
   mobileMenuOpen = false;
   themeService = inject(ThemeService);
@@ -79,16 +91,15 @@ export class HeaderComponent {
 
   visible: boolean = false;
 
-  constructor(private messageService: MessageService) {
-    this.themeService.darkMode$.subscribe(isDark => {
-      this.isDarkMode = isDark;
-    });
-  }
-
   scrollToSection(fragment: string) {
-    const element = document.getElementById(fragment);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    const currentUrl = this.router.url.split('#')[0];
+    if (currentUrl !== '/' && currentUrl !== '/#' + fragment) {
+      this.router.navigate(['/'], { fragment });
+    } else {
+      const element = document.getElementById(fragment);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
   
